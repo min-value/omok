@@ -43,20 +43,25 @@ body {
 
 .stone {
     position: absolute;
-    width: 3vmin;
-    height: 3vmin;
-    border-radius: 50%;
+    width: 5vmin;
+    height: 5vmin;
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
 
 .black {
-    background-color: black;
+    background-image: url("../../../img/black-stone.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .white {
-    background-color: white;
-    border: 1px solid black;
+    background-image: url("../../../img/white-stone.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
 }
 
 .info {

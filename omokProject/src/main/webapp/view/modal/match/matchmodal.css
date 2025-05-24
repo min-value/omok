@@ -1,0 +1,159 @@
+@font-face {
+    font-family: 'DungGeunMo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-size: cover;
+    background: url('../../../img/background2.png') no-repeat fixed top center;
+    display: flex;
+    justify-content: center;
+    font-family: 'DungGeunMo', sans-serif;
+}
+
+.button-wrapper {
+    width: 180px;
+    height: 60px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.button-wrapper button {
+    width: 140px;
+    height: 45px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-family: 'DungGeunMo', sans-serif;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 45vw;
+    height: 70vh;
+    background: url('../../../img/modal_background.png') no-repeat center center;
+    background-size: contain;
+    padding: 20px;
+    text-align: center;
+    color: black;
+}
+
+.match-image {
+    background: url('../../../img/match_text.png') no-repeat center center;
+    width: auto;
+    height: 15vh;
+    background-size: contain;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.info-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.player {
+    position: relative;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.player-card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.card-bg {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    background-color: #FFF1A4;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.profile-image {
+    width: 100%;
+    height: 200px;
+    background: url('../../../img/profile.png');
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-size: cover;
+}
+
+.player-name {
+    width: 100%;
+    background-color: white;
+    font-size: 20px;
+    padding: 16px 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.stone-image-black {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    top: 170px;
+    left: 170px;
+}
+
+.stone-image-white {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    top: 170px;
+    right: 170px;
+}
+
+
+.player-rate {
+    font-size: 24px;
+    padding-top: 10px;
+}
+
+.vs-text {
+    font-size: 56px;
+    font-weight: bold;
+    color: black;
+}
+

@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'DungGeunMo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-size: cover;
+    background: url('../../img/background1.png') no-repeat fixed top center;
+    display: flex;
+    justify-content: center;
+    font-family: 'DungGeunMo', sans-serif;
+}
+
+.loading-container {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    margin-bottom: 56px;
+}
+
+.loading-icon {
+    margin-bottom: 24px;
+    animation: rotateStep 6s steps(12) infinite; /*0.5초당 30도*/
+    transform-origin: center;
+}
+
+@keyframes rotateStep {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    font-size: 6vw;
+    max-font-size: 48px;
+    min-font-size: 24px;
+    color: black;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-align: center;
+    word-break: keep-all;
+}

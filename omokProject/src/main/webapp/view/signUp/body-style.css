@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'NeoDunggeunmo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family: NeoDunggeunmo;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0 0;  /* 브라우저 기본 여백 제거 */
+    padding: 0 0;
+    overflow-x: hidden;  /* 좌우 깨짐 방지 */
+}
+body {
+    background: url("../../img/background1.png") top center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem; /* 기준 rem */
+}
+.sign-up{
+    width: 90vw;                /* 더 유연하게 반응형 설정 */
+    max-width: 1182px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.sign-up__title{
+    display: flex;  /* ✅ 이것이 핵심! */
+    width: 100%;
+    height: auto;  /* 고정 비율 대신 내용 기반 */
+    padding: clamp(10px, 2vh, 20px) clamp(10px, 3vw, 40px);
+    box-sizing: border-box;  /* ✅ 핵심! 패딩 포함해서 height 계산 */
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(80px, 20vh, 124px);
+
+    margin-bottom: clamp(10px, 5vh, 40px); /* ✅ 아래 여백 */
+    margin-top: clamp(10px, 5vh, 40px); /* ✅ 아래 여백 */
+}
+.sign-up__form{
+    width: 100%;
+    height: 45%;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;  /* ✅ 핵심! 패딩 포함해서 height 계산 */
+    gap: clamp(10px, 2vw, 40px); /* 두 박스 간의 간격만 조정 */
+}
+.sign-up__footer{
+    width: 100%;
+    height: 30%;
+}
+form {
+    flex-wrap: wrap;  /* 화면 줄어들면 줄바꿈 */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.sign-up__form-input{
+    display: flex;            /* ✅ flex 컨테이너 설정 */
+    flex-direction: column;  /* ✅ 위에서 아래로 정렬 */
+    width: 60%;
+    height: 100%;
+    box-sizing: border-box;  /* ✅ 핵심! 패딩 포함해서 height 계산 */
+}
+#pwd_input{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: clamp(10px, 2vh, 20px);
+}
+#id_input, #re_pwd_input{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    width: 180px; /* ✅ 모든 label 너비 고정 */
+    text-align: right; /* 또는 left로 조정 가능 */
+    font-size: clamp(16px, 3vw, 40px);
+}
+
+input[type="text"],
+input[type="password"]
+{
+    height: 100%; /* ✅ 부모 높이 그대로 상속받음 */
+    flex: 1;
+    padding: 10px 16px;
+    font-size: clamp(24px, 3vw, 36px);
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    min-width: 0;  /* 줄바꿈 시 input이 늘어나지 않도록 */
+}

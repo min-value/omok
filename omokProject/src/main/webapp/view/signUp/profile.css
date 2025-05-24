@@ -1,0 +1,65 @@
+.sign-up__form-profile {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 40%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#profile_input {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px; /* ✅ 너무 커지지 않게 제한 */
+    height: 100%;
+    box-sizing: border-box;
+    gap: clamp(10px, 2vh, 24px);
+}
+
+.profile-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: clamp(8px, 1.5vh, 16px);  /* ✅ 반응형 여백 */
+    box-sizing: border-box;
+}
+
+.avatar-random-btn {
+    position: absolute;
+    bottom: clamp(4px, 1vh, 12px);
+    right: clamp(4px, 1vh, 12px);
+    background-color: #F9C631;
+    border: none;
+    border-radius: 50%;
+    width: clamp(28px, 5vw, 40px);  /* ✅ 반응형 크기 */
+    height: clamp(28px, 5vw, 40px);
+    font-size: clamp(14px, 2.5vw, 20px);
+    cursor: pointer;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#profile {
+    object-fit: cover;
+    border-radius: 10px;
+    width: 100%;
+    height: auto; /* 필요시 100% 로 바꿔도 됨 */
+    display: block; /* ✅ display: flex 제거 */
+}
+
+#submit_button {
+    width: 100%;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: clamp(18px, 2.5vw, 36px);
+    border: #9C5416 solid 5px;
+    border-radius: 10px;
+    background-color: #E5A552;
+    padding: clamp(10px, 2vh, 16px) clamp(20px, 3vw, 36px);
+    /*margin-top: auto;*/
+    margin-bottom: clamp(32px, 3vw, 52px);
+    cursor: pointer;
+    box-sizing: border-box;
+}

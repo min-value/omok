@@ -30,10 +30,13 @@
 }
 .form-notice {
     font-size: clamp(18px, 3vw, 25px);
-    color: blue;
     text-align: right; /* ✅ label은 오른쪽 정렬 */
     max-width: 100%;         /* ✅ 너무 길어지면 줄바꿈 유도 */
     word-break: keep-all;    /* 한글은 단어 단위로 줄바꿈 */
+}
+
+.guide {
+    color: blue;
 }
 
 .match {

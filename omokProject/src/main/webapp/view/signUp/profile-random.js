@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileInput = document.querySelector("#profileNumber");
 
     button.addEventListener("click", () => {
-        const randomNum = Math.floor(Math.random() * 6) + 10; // 10~15까지
+        const randomNum = Math.floor(Math.random() * 5) + 1; // 1부터 6까지
         profileImg.src = `../../img/profile/${randomNum}.png`;
         profileInput.value = randomNum;
     });

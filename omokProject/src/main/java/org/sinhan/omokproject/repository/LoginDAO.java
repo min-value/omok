@@ -56,4 +56,25 @@ public enum LoginDAO {
         }
         return vo;
     }
+
+    public boolean isExistUserById(String userId){
+        String sql = "SELECT * FROM USER WHERE user_id = ?";
+        boolean exists = false;
+
+        try{
+            @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+            @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql); //sql 쿼리 날리기
+            pstmt.setString(1, userId);
+
+            @Cleanup ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                exists = true;
+            }
+        }catch (Exception e){
+            log.error("에러 발생 : {}",e.getMessage());
+            e.printStackTrace();
+        }
+        return exists;
+    }
 }

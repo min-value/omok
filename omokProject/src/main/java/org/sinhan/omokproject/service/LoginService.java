@@ -17,4 +17,10 @@ public class LoginService {
     public UserVO login(String userId, String userPw){
         return dao.getUserByIdAndPassword(userId, userPw);
     }
+
+    //아이디 중복 체크를 위함
+    public boolean isExistId(String userId){
+        return dao.isExistUserById(userId);
+    }
+
 }

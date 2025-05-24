@@ -17,7 +17,5 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //아직 개발전~
-        super.doPost(req, resp);
     }
 }

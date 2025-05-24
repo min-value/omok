@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
     userIdInput.addEventListener('input', function () {
-        isIdChecked = false;
+        idNotice.textContent = "영문자, 숫자 조합 12자 이내";
+        idNotice.classList.remove("match", "no-match");
+        idNotice.classList.add("guide");
+
+        // ✅ 중복확인 결과를 무효화
+        isIdChecked = false;  // 전역 변수로 관리
     });
 });

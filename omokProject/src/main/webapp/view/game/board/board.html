@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OMOK</title>
+    <link rel="stylesheet" href="board.css" />
+</head>
+<body>
+<div class="container">
+    <div class="board" id="board">
+        <img id="board-image" src="../../../img/omok_board.png" alt="omok board" />
+    </div>
+    <div class="info">
+        <div class="profile">
+            profile
+        </div>
+        <div class="chat">
+            chat
+        </div>
+    </div>
+</div>
+
+<script>
+    const boardSize = 15;
+    const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0));
+    let currentTurn = 1;
+
+    const boardElement = document.getElementById("board");
+    const boardImage = document.getElementById("board-image");
+
+    boardElement.addEventListener("click", (e) => {
+        const rect = boardImage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const boardWidth = rect.width;
+        const boardHeight = rect.height;
+
+        const borderRatio = 65 / 768;
+        const offsetX = -4;
+        const offsetY = -2;
+
+        const gridStartX = boardWidth * borderRatio + offsetX;
+        const gridStartY = boardHeight * borderRatio + offsetY;
+
+        const gridSizeX = boardWidth - 2 * gridStartX;
+        const gridSizeY = boardHeight - 2 * gridStartY;
+
+        const cellSizeX = gridSizeX / (boardSize - 1);
+        const cellSizeY = gridSizeY / (boardSize - 1);
+
+        // 격자 바깥 클릭 방지
+        if (
+            x < gridStartX || x > boardWidth - gridStartX ||
+            y < gridStartY || y > boardHeight - gridStartY
+        ) return;
+
+        const col = Math.round((x - gridStartX) / cellSizeX);
+        const row = Math.round((y - gridStartY) / cellSizeY);
+
+        if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+            placeStone(row, col, gridStartX, gridStartY, cellSizeX, cellSizeY);
+        }
+    });
+    //
+    // function drawDebugGrid(gridStartX, gridStartY, cellSizeX, cellSizeY) {
+    //     for (let r = 0; r < boardSize; r++) {
+    //         for (let c = 0; c < boardSize; c++) {
+    //             const guide = document.createElement('div');
+    //             guide.style.position = 'absolute';
+    //             guide.style.left = `${gridStartX + c * cellSizeX}px`;
+    //             guide.style.top = `${gridStartY + r * cellSizeY}px`;
+    //             guide.style.width = '4px';
+    //             guide.style.height = '4px';
+    //             guide.style.borderRadius = '50%';
+    //             guide.style.background = 'red';
+    //             guide.style.transform = 'translate(-50%, -50%)';
+    //             boardElement.appendChild(guide);
+    //         }
+    //     }
+    // }
+
+
+    function placeStone(row, col, gridStartX, gridStartY, cellSizeX, cellSizeY) {
+        if (board[row][col] !== 0) return;
+
+        board[row][col] = currentTurn;
+        renderStone(row, col, currentTurn, gridStartX, gridStartY, cellSizeX, cellSizeY);
+
+        currentTurn = currentTurn === 1 ? 2 : 1;
+        //drawDebugGrid(gridStartX, gridStartY, cellSizeX, cellSizeY);
+
+    }
+
+    function renderStone(row, col, color, gridStartX, gridStartY, cellSizeX, cellSizeY) {
+        const stone = document.createElement("div");
+        stone.className = "stone " + (color === 1 ? "black" : "white");
+
+        const left = gridStartX + col * cellSizeX;
+        const top = gridStartY + row * cellSizeY;
+
+        stone.style.left = `${left}px`;
+        stone.style.top = `${top}px`;
+
+        boardElement.appendChild(stone);
+    }
+</script>
+</body>
+</html>

@@ -43,40 +43,35 @@ body, html{
 }
 
 #text{
-    background: url("/img/win_text.png") no-repeat center center;
+    background: url("/img/notice.png") no-repeat center center;
     background-size: contain;
     height: 25%;
     margin-top: 9%;
+    margin-bottom: 4%;
 }
 
 #info{
     height: 29%;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5%;
     padding: 2.5% 17%;
-    flex-wrap: wrap; /* ← 좁아지면 아래로 내려가게 */
     overflow: hidden; /* ← 튀어나오는 거 방지 */
 }
-#user_img{
-    flex-basis: 35%;
-    aspect-ratio: 3 / 4;
-    background: url("/img/user_young.png") no-repeat;
-    background-size: contain;
-    min-width: 80px;
-}
-#explanation{
+.explanation{
     flex: 1;
-    font-size: clamp(12px, 2vw, 20px);
+    font-size: clamp(12px, 2vw, 30px);
     word-break: keep-all;
     min-width: 120px;
     align-self: flex-start;
-    padding: 4% 0;
+    padding: 3% 0;
+    text-align: center;
+}
+.highlight {
+    color: #f60101;
 }
 
+
 #btn{
-    height: 20%;
+    height: 18%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,7 +79,7 @@ body, html{
     padding: 0 2%;
     gap: 4%;
 }
-#go_main_btn, #re_btn{
+#re_btn{
     height: 45%;
     width: 25%;
     background-color: #d9d9d9;
@@ -93,11 +88,29 @@ body, html{
     font-size: clamp(8px, 1.5vw, 25px);
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-#go_main_btn:hover, #re_btn:hover{
+#re_btn:hover{
     background-color: #bdbdbd;
     border-color: #bdbdbd;
 }
-#go_main_btn:active, #re_btn:active{
+#re_btn:active{
     background-color: #a6a6a6;
-    border-color: #c6c6c6;
+    border-color: #a6a6a6;
+}
+
+#go_main_btn{
+    height: 45%;
+    width: 25%;
+    background-color: #abd0ff;
+    border-radius: 10px;
+    border-color: #abd0ff;
+    font-size: clamp(8px, 1.5vw, 25px);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+#go_main_btn:hover{
+    background-color: #a0caff;
+    border-color: #a0caff;
+}
+#go_main_btn:active{
+    background-color: #9acaff;
+    border-color: #9acaff;
 }

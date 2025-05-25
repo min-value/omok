@@ -15,9 +15,9 @@
             <div class="player">
                 <div class="card-bg"></div>
                 <div class="player-card">
-                    <div class="profile-image"></div>
-                    <div class="player-name">신다운</div>
-                    <div class="player-rate">승률 100%</div>
+                    <div class="profile-image1"></div>
+                    <div class="player-name">Player1</div>
+                    <div class="player-rate">승률 60 %</div>
                 </div>
                 <img src="../../../img/black_stone.png" class="stone-image-black"  alt="흑돌"/>
             </div>
@@ -28,9 +28,9 @@
                 <img src="../../../img/white_stone.png" class="stone-image-white"  alt="백돌"/>
                 <div class="card-bg"></div>
                 <div class="player-card">
-                    <div class="profile-image"></div>
-                    <div class="player-name">신다운</div>
-                    <div class="player-rate">승률 100%</div>
+                    <div class="profile-image2"></div>
+                    <div class="player-name">Player2</div>
+                    <div class="player-rate">승률 80 %</div>
                 </div>
             </div>
 

@@ -148,7 +148,7 @@
 
     function placeStone(row, col) {
         if (board[row][col] !== 0) return;
-        //todo: 오목 룰 추가 필요 (33, 44,,,,,)
+
         board[row][col] = currentTurn;
         renderStone(row, col);
 
@@ -219,11 +219,7 @@
         let r = row + dy;
         let c = col + dx;
 
-        while (
-            r >= 0 && r < boardSize &&
-            c >= 0 && c < boardSize &&
-            board[r][c] === color
-            ) {
+        while (r >= 0 && r < boardSize && c >= 0 && c < boardSize && board[r][c] === color) {
             count++;
             r += dy;
             c += dx;

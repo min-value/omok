@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         if (user == null) {
             HttpSession session = req.getSession();
             session.setAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
-            resp.sendRedirect( "/login");
+            resp.sendRedirect( "/login?error=1"); //error 파라미터를 넘긴다.
             return;
         }
 
@@ -44,8 +44,10 @@ public class LoginController extends HttpServlet {
         //세션에 저장
         HttpSession session = req.getSession();
         session.setAttribute("loginInfo", user); //세션에 저장
-//        resp.sendRedirect("/omok/main");
-        //일단 지금은 main화면이 없으니까 이렇게만 구성....
-        resp.sendRedirect("/");
+
+        //세션에서 불러와보자.
+        log.info("session에서 가져온 객체 : {}", session.getAttribute("loginInfo").toString());
+        //로그 확인 완료 : 14:52:54.440 [http-nio-8090-exec-8] INFO  org.sinhan.omokproject.filter.LoginCheckFilter - session loginInfo 객체 확인 : UserVO(userId=sunJ, userPW=pass6789, bio=오선정 입니다~, image=6, win=2, lose=2, rate=50)
+        resp.sendRedirect("/omok/main");
     }
 }

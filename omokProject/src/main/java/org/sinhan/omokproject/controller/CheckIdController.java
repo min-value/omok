@@ -1,6 +1,5 @@
 package org.sinhan.omokproject.controller;
 
-
 import org.sinhan.omokproject.service.LoginService;
 
 import javax.servlet.ServletException;
@@ -20,7 +19,7 @@ public class CheckIdController extends HttpServlet {
         LoginService service = new LoginService();
         boolean exist = service.isExistId(userId);
 
-        //json으로 보내야 하므로
+        // JSON으로 보내야 하므로
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 

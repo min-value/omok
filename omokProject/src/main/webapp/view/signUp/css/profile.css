@@ -1,0 +1,39 @@
+#profile_input {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    box-sizing: border-box;
+    gap: clamp(10px, 2vh, 24px);
+}
+
+.profile-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: clamp(8px, 1.5vh, 16px);
+    box-sizing: border-box;
+}
+
+.avatar-random-btn {
+    position: absolute;
+    bottom: clamp(4px, 1vh, 12px);
+    right: clamp(4px, 1vh, 12px);
+    background-color: #F9C631;
+    border: none;
+    border-radius: 50%;
+    width: clamp(28px, 5vw, 40px);
+    height: clamp(28px, 5vw, 40px);
+    font-size: clamp(14px, 2.5vw, 20px);
+    cursor: pointer;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#profile {
+    object-fit: cover;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    display: block;
+}

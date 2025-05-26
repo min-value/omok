@@ -1,0 +1,433 @@
+/*
+* {
+    font-family: NeoDunggeunmo;
+}
+ */
+@font-face {
+    font-family: 'NeoDunggeunmo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-image: url("../../img/background2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    margin: 0;
+}
+
+#logout-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 1000;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logout-btn img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+#full_box {
+    display:flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+#section1 {
+    flex: 0 0 45%; /* 너비 45% 고정 */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rank_background {
+    height:100%;
+    width: 100%;
+    display: block;
+}
+
+
+#ranking {
+    position: absolute;
+    top: 38%;
+    left: 15%;
+    width: 67%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    justify-content: flex-start;
+    padding: 0 13px 13px;
+    z-index: 10;
+}
+
+#ranking_section {
+    height: 85%;
+    width: 100%;
+    overflow-y: auto;
+}
+#ranking_section::-webkit-scrollbar {
+    width: 8px;
+}
+
+#ranking_section::-webkit-scrollbar-thumb {
+    background-color: #B97843;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+}
+
+#ranking_section::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255,.3);
+    border-radius: 10px;
+}
+
+.rank_item {
+    position: relative;
+    height: 4rem;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+    margin-top: 0;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.rank_item_background {
+    width: 100%;
+    height: 100%;
+    background-color: #FFC77E;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 15px rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rank_num {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'yg-jalnan';
+    font-size: x-large;
+}
+
+.rank_user_image {
+    height: 70%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 3px solid white;
+    background-image: url("../../img/character/avatar1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rank_user_id {
+    width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'yg-jalnan';
+    font-size: x-large;
+}
+
+.rank_user_rate {
+    width: 30%;
+    height: 60%;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'yg-jalnan';
+    font-size: x-large;
+    background-color: rgba(224, 158, 110, 0.3);
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4),
+    0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.win_icon {
+    height: 50%;
+    width: auto;
+    object-fit: contain;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.win_rate {
+    color: white;
+    text-shadow:
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black;
+}
+
+#my_rank {
+    height: 4rem;
+    width: 98.5%;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    background-color: #9EFFF4;
+    box-shadow: inset 0 0 20px rgba(75, 151, 149, 0.5);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#section2 {
+    flex: 0 0 55%; /* 너비 55% 고정 */
+    display: flex;
+    flex-direction: column;
+}
+
+#logo_section {
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo {
+    height: 85%;
+}
+
+#profile_section {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profile_card {
+    height: 92%;
+    width: 75%;
+    background-color: rgba(200, 238, 13, 0.6);
+    border-radius: 30px;
+    border: 10px solid #207600;
+    box-shadow: 12px 12px 15px 3px rgba(0,0,0,0.3);
+    display: flex;
+}
+
+#profile_info_section {
+    width: 65%;
+    margin: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5vh;
+    font-family: 'NeoDunggeunmo';
+}
+
+.info_row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    margin-bottom: 1vh;
+    margin-left: 1vw;
+    flex-wrap: wrap;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 0.3vh;
+    color: black;
+    font-size: 1rem;
+}
+
+.value {
+    background-color: white;
+    padding: 1vh 1vw;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #aaa;
+    font-size: 1rem;
+    line-height: 1.5;
+    word-break: break-word;
+    width: 100%;
+    height: 5vh;
+    box-sizing: border-box;
+}
+
+.value.bio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 9.2vh;
+}
+
+
+textarea.bio_text {
+    width: 95%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    resize: none;
+    font-family: 'NeoDunggeunmo';
+    font-size: 0.9rem;
+    line-height: 1.5;
+    background: none;
+    color: black;
+    outline: none;
+    vertical-align: middle;
+}
+
+#edit_icon {
+    display: inline-block;
+    width: 5%;
+    aspect-ratio: 1 / 1;
+    margin-left: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
+.value-winning {
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.multi-graph {
+    display: flex;
+    height: 25px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    margin: 10px 0;
+    font-size: 0.8rem;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    border: 2px solid black;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.win {
+    background-color: #4a68c3;
+}
+
+.lose {
+    background-color: #F44336;
+}
+
+.legend {
+    display: flex;
+    gap: 10px;
+    font-size: 0.8rem;
+    margin-top: 2px;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    align-items: center;
+    gap: 4px;
+    color: black;
+    border-radius: 50%;
+    border: 1px solid black;
+    aspect-ratio: 1 / 1;
+    margin-right: 3px;
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.exp_text {
+    color: black;
+    font-size: 0.9rem;
+}
+
+#profile_image_section {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#avatar {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    background-image: url("../../img/character/avatar1.png");
+    background-color: skyblue;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#edit_btn {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background-color: #FFD600;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#button_section {
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start_btn {
+    font-family: 'NeoDunggeunmo';
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+    height: 60%;
+    width: 30%;
+    background-color: #E5A552;
+    border: 8px solid #9C5416;
+    border-radius: 15px;
+}

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/omok.iml" filepath="$PROJECT_DIR$/.idea/omok.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/omokProject.main.iml" filepath="$PROJECT_DIR$/.idea/modules/omokProject.main.iml" />
     </modules>
   </component>
 </project>

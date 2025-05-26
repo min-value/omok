@@ -50,6 +50,7 @@
     align-self: flex-end;
     position: relative;
     font-size: 15px;
+    text-align: center;
     word-break: break-all;
 }
 /*말풍선 모양 만들기*/
@@ -62,6 +63,32 @@
     border-width: 8px 0 8px 10px;
     border-style: solid;
     border-color: transparent transparent transparent #8ee6ee;
+}
+/* 상대방이 보낸 메세지 */
+.other-message {
+    background: #33b9dc;
+    border-radius: 7px;
+    display: inline-block;
+    width: fit-content;
+    max-width: 173px;
+    padding: 10px;
+    margin: 5px;
+    align-self: flex-start;
+    position: relative;
+    font-size: 15px;
+    text-align: center;
+    word-break: break-all;
+}
+/*상대방 말풍선 모양 만들기*/
+.other-message::after {
+    content: "";
+    position: absolute;
+    top: 65%;
+    left: -8px;
+    transform: translateY(-50%);
+    border-width: 8px 10px 8px 0;
+    border-style: solid;
+    border-color: transparent #33b9dc transparent transparent;
 }
 .chat-bottom {
     display: flex;

@@ -1,0 +1,43 @@
+#bio_group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1vh, 12px);
+    width: 100%;
+    margin-bottom: clamp(10px, 3vh, 30px);
+    box-sizing: border-box;
+}
+
+#bio_input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: clamp(60px, 10vh, 120px);
+    box-sizing: border-box;
+}
+
+textarea {
+    position: relative;
+    z-index: 1;
+
+    height: 100%;
+    flex: 1;
+    padding: 10px 16px;
+    font-size: clamp(16px, 3vw, 24px);
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    resize: none;
+    min-width: 0;
+}
+
+textarea:focus{
+    outline: none;
+    border: #207600 solid 5px;
+}
+
+.form-counter {
+    font-size: clamp(16px, 3vw, 26px);
+    text-align: right;
+    color: gray;
+    word-break: keep-all;  /* 길어질 경우 한글 줄바꿈 안정화 */
+}

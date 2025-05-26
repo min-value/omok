@@ -64,6 +64,12 @@ body {
 
 }
 
+.stone.hover {
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 10;
+}
+
 .info {
     display: grid;
     grid-template-rows: auto auto 1fr auto;

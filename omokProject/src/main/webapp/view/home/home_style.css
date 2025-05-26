@@ -1,7 +1,5 @@
 /*
-* {
-    font-family: NeoDunggeunmo;
-}
+기본 픽셀 폰트
  */
 @font-face {
     font-family: 'NeoDunggeunmo';
@@ -10,11 +8,23 @@
     font-style: normal;
 }
 
+/*
+랭킹 표시 폰트
+ */
 @font-face {
     font-family: 'yg-jalnan';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
+
+/*
+로고 움직임
+ */
+@-webkit-keyframes logo-move {
+    50% {
+        -webkit-transform: rotate(-1.5deg);
+    }
 }
 
 body {
@@ -27,11 +37,11 @@ body {
 
 #logout-btn {
     position: absolute;
-    top: 5px;
-    right: 15px;
+    top: 2vh;
+    right: 0.2vw;
     z-index: 1000;
     cursor: pointer;
-    width: 10vw;
+    width: 13vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +60,7 @@ body {
 }
 
 #section1 {
-    flex: 0 0 45%; /* 너비 45% 고정 */
+    flex: 0 0 45%;
     position: relative;
     display: flex;
     justify-content: center;
@@ -66,15 +76,14 @@ body {
 
 #ranking {
     position: absolute;
-    top: 38%;
-    left: 15%;
-    width: 67%;
+    top: 38vh;
+    left: 7vw;
+    width: 68%;
     height: 50%;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
     justify-content: flex-start;
-    padding: 0 13px 13px;
+    padding: 0 1vw 1vw;
     z-index: 10;
 }
 
@@ -84,28 +93,31 @@ body {
     overflow-y: auto;
 }
 #ranking_section::-webkit-scrollbar {
-    width: 8px;
+    width: 0.5vw;
 }
 
 #ranking_section::-webkit-scrollbar-thumb {
     background-color: #B97843;
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    border-radius: 0.5vw;
+    -webkit-box-shadow: inset 0 0 0.3vw rgba(0,0,0,.3);
 }
 
 #ranking_section::-webkit-scrollbar-track {
     background: rgba(255, 255, 255,.3);
-    border-radius: 10px;
+    border-radius: 1vw;
 }
 
 .rank_item {
     position: relative;
+    /*
     height: 4rem;
-    width: 100%;
+     */
+    height: 8.5vh;
+    width: 29.5vw;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 1.5vw;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 0.5vw;
     flex-shrink: 0;
 }
 
@@ -113,8 +125,8 @@ body {
     width: 100%;
     height: 100%;
     background-color: #FFC77E;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
-    0 0 15px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 2vw rgba(255, 255, 255, 0.5),
+    0 0 1.5vw rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -126,22 +138,25 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'yg-jalnan';
-    font-size: x-large;
+    font-size: 2vw;
 }
 
-.rank_user_image {
+.rank_user_image_wrapper {
     height: 70%;
     aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    border: 3px solid white;
-    background-image: url("../../img/character/avatar1.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.rank_user_image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 0.3vw solid white;
+    object-fit: cover;
+}
+
 
 .rank_user_id {
     width: 40%;
@@ -150,51 +165,54 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'yg-jalnan';
-    font-size: x-large;
+    font-size: 1.8vw;
 }
 
 .rank_user_rate {
     width: 30%;
     height: 60%;
-    margin-right: 10px;
+    margin-right: 1vw;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'yg-jalnan';
-    font-size: x-large;
+    font-size: 1.6vw;
     background-color: rgba(224, 158, 110, 0.3);
     border-radius: 999px;
     overflow: hidden;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4),
-    0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 2vw rgba(255, 255, 255, 0.4),
+    0 0 1vw rgba(0, 0, 0, 0.2);
 }
 
 .win_icon {
-    height: 50%;
+    height: 80%;
     width: auto;
     object-fit: contain;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 0.5vw;
 }
 
 .win_rate {
     color: white;
     text-shadow:
-            -1px -1px 0 black,
-            1px -1px 0 black,
-            -1px  1px 0 black,
-            1px  1px 0 black;
+            -0.07vw -0.07vw 0 black,
+            0.07vw -0.07vw 0 black,
+            -0.07vw  0.07vw 0 black,
+            0.07vw  0.07vw 0 black;
 }
 
 #my_rank {
+    /*
     height: 4rem;
+     */
+    height: 8.5vh;
     width: 98.5%;
-    border-radius: 20px;
-    margin-top: 10px;
+    border-radius: 1.5vw;
+    margin-top: 1vh;
     margin-bottom: 0;
     background-color: #9EFFF4;
-    box-shadow: inset 0 0 20px rgba(75, 151, 149, 0.5);
+    box-shadow: inset 0 0 2vw rgba(75, 151, 149, 0.5);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -207,11 +225,19 @@ body {
 }
 
 #logo_section {
-    height: 25%;
+    height: 25vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.logo_wrapper {
+    height: 100%;
+    -webkit-animation: logo-move 1s ease-in-out infinite;
+    animation: logo-move 1s ease-in-out infinite;
+}
+
+
 
 #logo {
     height: 85%;
@@ -229,9 +255,9 @@ body {
     height: 92%;
     width: 75%;
     background-color: rgba(200, 238, 13, 0.6);
-    border-radius: 30px;
-    border: 10px solid #207600;
-    box-shadow: 12px 12px 15px 3px rgba(0,0,0,0.3);
+    border-radius: 3vw;
+    border: 0.5vw solid #207600;
+    box-shadow: 1.2vw 1.2vw 1.5vw 0.3vw rgba(0,0,0,0.3);
     display: flex;
 }
 
@@ -258,16 +284,16 @@ body {
     font-weight: bold;
     margin-bottom: 0.3vh;
     color: black;
-    font-size: 1rem;
+    font-size: 1.2vw;
 }
 
 .value {
     background-color: white;
     padding: 1vh 1vw;
-    border-radius: 10px;
-    box-shadow: 2px 2px 4px #aaa;
-    font-size: 1rem;
-    line-height: 1.5;
+    border-radius: 0.5vw;
+    box-shadow: 0.2vw 0.2vw 0.4vw #aaa;
+    font-size: 1vw;
+    line-height: 3vh;
     word-break: break-word;
     width: 100%;
     height: 5vh;
@@ -287,11 +313,12 @@ textarea.bio_text {
     height: 100%;
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
     border: none;
     resize: none;
     font-family: 'NeoDunggeunmo';
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 1vw;
+    line-height: 3vh;
     background: none;
     color: black;
     outline: none;
@@ -302,29 +329,30 @@ textarea.bio_text {
     display: inline-block;
     width: 5%;
     aspect-ratio: 1 / 1;
-    margin-left: 8px;
+    margin-left: 0.8vw;
     vertical-align: middle;
     cursor: pointer;
 }
 
-
+#winning_box {
+    display: flex;
+    flex-direction: row;
+}
 .value-winning {
-    padding: 6px 12px;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    font-size: 1vw;
 }
 
 .multi-graph {
     display: flex;
-    height: 25px;
-    border-radius: 20px;
+    height: 3.2vh;
+    border-radius: 3vw;
     overflow: hidden;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    margin: 10px 0;
-    font-size: 0.8rem;
+    box-shadow: 0.2vw 0.2vw 0.5vw rgba(0,0,0,0.2);
+    margin: 1vh 0;
+    font-size: 0.9vw;
     color: white;
-    text-shadow: 1px 1px 2px black;
-    border: 2px solid black;
+    text-shadow: 0.1vw 0.1vw 0.2vw black;
+    border: 0.2vw solid black;
 }
 
 .bar {
@@ -344,9 +372,8 @@ textarea.bio_text {
 
 .legend {
     display: flex;
-    gap: 10px;
-    font-size: 0.8rem;
-    margin-top: 2px;
+    gap: 1vw;
+    margin-top: 0.2vh;
     align-items: center;
 }
 
@@ -357,20 +384,22 @@ textarea.bio_text {
 
 .dot {
     align-items: center;
-    gap: 4px;
+    gap: 0.4vw;
     color: black;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 0.2vw solid black;
     aspect-ratio: 1 / 1;
-    margin-right: 3px;
+    margin-right: 0.2vw;
     display: inline-block;
-    width: 0.8em;
-    height: 0.8em;
+    width: 1vw;
 }
 
 .exp_text {
     color: black;
+    /*
     font-size: 0.9rem;
+     */
+    font-size: 1vw;
 }
 
 #profile_image_section {
@@ -383,8 +412,8 @@ textarea.bio_text {
 #avatar {
     width: 80%;
     aspect-ratio: 1 / 1;
-    border-radius: 20px;
-    background-image: url("../../img/character/avatar1.png");
+    border-radius: 2vw;
+    background-image: url("../../img/profile/1.png");
     background-color: skyblue;
     background-size: cover;
     background-position: center;
@@ -394,17 +423,16 @@ textarea.bio_text {
 
 #edit_btn {
     position: absolute;
-    bottom: -10px;
-    right: -10px;
+    bottom: -1vh;
+    right: -1vw;
     background-color: #FFD600;
-    width: 40px;
-    height: 40px;
+    width: 4vw;
+    height: 4vw;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    font-size: 16px;
+    box-shadow: 0.2vw 0.2vw 0.5vw rgba(0,0,0,0.3);
     cursor: pointer;
 }
 
@@ -415,16 +443,17 @@ textarea.bio_text {
     align-items: center;
 }
 
+#button_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 #start_btn {
-    font-family: 'NeoDunggeunmo';
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
     cursor: pointer;
-    transition: transform 0.1s ease-in-out;
-    height: 60%;
-    width: 30%;
-    background-color: #E5A552;
-    border: 8px solid #9C5416;
-    border-radius: 15px;
+    height: 50%;
+    background-image: url("../../img/start_btn.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }

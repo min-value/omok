@@ -65,7 +65,7 @@ function setProfile(id, bio, win, lose, image_num) {
     $('.value-winning')
         .text((win + lose) + '전 ' + win + '승 ' + lose + '패');
     $('#avatar')
-        .css('background-image', 'url(../../img/character/' + 'avatar' + image_num + '.png');
+        .css('background-image', 'url(../../img/profile/' + image_num + '.png');
 }
 
 /* 그래프 업데이트 함수 */

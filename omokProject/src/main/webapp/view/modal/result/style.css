@@ -40,6 +40,7 @@ body, html{
     aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
     background: url("/img/modal_background.png") no-repeat center center;
     background-size: contain;
+    min-width: 100px;
 }
 
 #text{
@@ -50,18 +51,16 @@ body, html{
 }
 
 #info{
-    height: 29%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5%;
-    padding: 2.5% 17%;
-    flex-wrap: wrap; /* ← 좁아지면 아래로 내려가게 */
+    padding: 0 17%;
     overflow: hidden; /* ← 튀어나오는 거 방지 */
 }
 #user_img{
     flex-basis: 35%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     background: url("/img/user_young.png") no-repeat;
     background-size: contain;
     min-width: 80px;

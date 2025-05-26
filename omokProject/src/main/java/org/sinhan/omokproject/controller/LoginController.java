@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
         String userId = req.getParameter("userId");
         String userPw = req.getParameter("userPw");
 
-        LoginService service = new LoginService();
+        LoginService service = LoginService.INSTANCE; //싱글톤으로 서비스 객체를 가져온다.
         UserVO user = service.login(userId, userPw);
 
         //로그인 실패시 대응 만들기

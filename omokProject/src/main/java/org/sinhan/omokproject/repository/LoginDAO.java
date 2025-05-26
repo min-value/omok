@@ -77,4 +77,28 @@ public enum LoginDAO {
         }
         return exists;
     }
+
+    //회원가입을 위한 insert 필요
+    public int insertUser(UserVO vo){
+        String sql = "INSERT INTO USER(user_id,user_password,bio,image) VALUES(?,?,?,?)";
+        int cnt = 0;
+
+        try{
+            @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+            @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, vo.getUserId());
+            pstmt.setString(2, vo.getUserPW());
+            pstmt.setString(3, vo.getBio());
+            pstmt.setInt(4, vo.getImage());
+
+            cnt = pstmt.executeUpdate();
+        } catch (Exception e){
+            log.error("에러 발생 : {}", e.getMessage());
+            e.printStackTrace();
+        }
+
+        return cnt; //1이면 업데이트 완료
+    }
+
 }

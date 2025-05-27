@@ -43,4 +43,26 @@ class LoginDAOTest {
         //then
         Assertions.assertNull(vo);
     }
+
+    @Test
+    @DisplayName("회원가입 DAO 테스트")
+    void signUpTest() throws Exception {
+        //given
+        String userId = "testUser";
+        String userPw=  "testPass";
+        String bio = "테스트 유저입니다.";
+        int image = 4;
+
+        UserVO vo = UserVO.builder()
+                .userId(userId)
+                .userPW(userPw)
+                .bio(bio)
+                .image(image)
+                .build();
+
+        //when
+        int cnt = dao.insertUser(vo);
+        //then
+        Assertions.assertEquals(cnt, 1);
+    }
 }

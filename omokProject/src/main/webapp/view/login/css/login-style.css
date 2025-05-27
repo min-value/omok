@@ -9,7 +9,11 @@
 }
 body {
     position: relative;
-    background: url("../../../img/background1.png") top center/cover no-repeat;
+    /*백그라운드 이미지 조정*/
+    background-image: url("../../../img/background1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,13 +52,22 @@ form {
     gap: clamp(10px, 2vh, 20px);
 }
 
-.input-field,
 #submit-button {
     box-sizing: border-box;
     width: 75%;
     padding: clamp(10px, 2vh, 16px) clamp(20px, 3vw, 36px);
     font-size: clamp(18px, 2.5vw, 36px);
     border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.input-field{
+    /* border 공간을 항상 확보 */
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    width: 75%;
+    padding: clamp(10px, 2vh, 16px) clamp(20px, 3vw, 36px);
+    font-size: clamp(18px, 2.5vw, 36px);
     border-radius: 10px;
 }
 
@@ -65,6 +78,8 @@ form {
 
 .input-field:focus{
     outline: none;
+    /*박스 안 밀리게 border-box 추가*/
+    box-sizing: border-box;
     border: #207600 solid 5px;
 }
 

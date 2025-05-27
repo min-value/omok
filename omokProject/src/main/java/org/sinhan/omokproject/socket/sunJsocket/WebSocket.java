@@ -2,6 +2,7 @@ package org.sinhan.omokproject.socket.sunJsocket;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.log4j.Log4j2;
 import org.sinhan.omokproject.domain.GameVO;
 import org.sinhan.omokproject.domain.UserVO;
 import org.sinhan.omokproject.repository.sunJMatchingDAO.GameDAO;
@@ -15,14 +16,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/match")
-public class MatchWebSocket {
+
+
+@Log4j2
+@ServerEndpoint(value = "/min-value")
+public class WebSocket {
     // gameId → 세션들
     // Set<Session>가 해당 게임방에 들어온 유저들이다.
     private static final Map<Integer, Set<Session>> gameRoomMap = new ConcurrentHashMap<>();
     // 세션 → gameId
     private static final Map<Session, Integer> sessionRoomMap = new ConcurrentHashMap<>();
 
+    // 소켓의 onOpen은 클라이언트가 연결될때 호출되는 것으로, 이 부분은 무조건 매칭만 사용한다.
     @OnOpen
     public void onOpen(Session session) throws IOException {
         // 쿼리 스트링에서 gameId 파싱 (예: ?gameId=3)
@@ -46,7 +51,8 @@ public class MatchWebSocket {
         }
     }
 
-    //이 부분 약간 의심스럽기는 한데...일단 해보기
+    //match는 Onopen에서 이미 브로드 캐스트를 하고 있기 때문에 여기를 작성할 필요가 없다.
+    //여기는 채팅이랑 오목만 분리하면 된다.
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
         Integer gameId = sessionRoomMap.get(session);
@@ -55,53 +61,26 @@ public class MatchWebSocket {
         Set<Session> sessions = gameRoomMap.get(gameId);
         if (sessions == null) return;
 
-        // 메시지 파싱
         JsonObject receivedJson = JsonParser.parseString(message).getAsJsonObject();
         String type = receivedJson.get("type").getAsString();
 
-        if ("match".equals(type)) {
-            GameDAO gameDAO = GameDAO.INSTANCE;
-            UserDAO userDAO = UserDAO.INSTANCE;
+        log.info("type log : {}", type);
 
-            GameVO game = gameDAO.getGameById(gameId); //게임 가져와서 정보 변경해야 한다.
-            game.setStatus(GameVO.GameStatus.PLAYING);
-
-            String player2Id = receivedJson.get("you").getAsJsonObject().get("id").getAsString();
-            game.setPlayer2(player2Id);
-            gameDAO.updateGame(game);
-
-            System.out.println("[WebSocket] DB 상태 업데이트 완료: gameId = " + gameId);
-
-            // player1, player2 정보 미리 가져오기
-            UserVO player1 = userDAO.findUserById(game.getPlayer1());
-            UserVO player2 = userDAO.findUserById(game.getPlayer2());
-
-            // 각 세션에게 적절한 you/opponent 구성해서 보내기
-            for (Session s : sessions) {
-                if (!s.isOpen()) continue;
-
-                String targetId = session == s ? player2.getUserId() : player1.getUserId();
-                UserVO you = targetId.equals(player1.getUserId()) ? player1 : player2;
-                UserVO opponent = targetId.equals(player1.getUserId()) ? player2 : player1;
-
-                JsonObject youJson = JsonBuilderUtil.getUserInfo(you);
-                JsonObject opponentJson = JsonBuilderUtil.getUserInfo(opponent);
-
-                JsonObject response = new JsonObject();
-                //일단 이건 주석처리,,,나중에 chat이랑 game연결 되면 구분할 예정
-//                response.addProperty("type", "match");
-                response.addProperty("status", "MATCHED");
-                response.add("you", youJson);
-                response.add("opponent", opponentJson);
-
-                //추가 (선공 정하기 위함이다.)
-                response.addProperty("player1", game.getPlayer1());
-
-                s.getBasicRemote().sendText(response.toString());
-            }
+        switch (type) {
+            //채팅 메세지를 어떻게 처리할지를 고민한다.
+            case "chat":
+                handleChatMessage(receivedJson, sessions);
+                break;
+            //오목돌 이동을 어떻게 처리할지를 고민한다.
+            case "move":
+                handleMoveMessage(receivedJson, sessions);
+                break;
+            default:
+                log.warn("알 수 없는 type 수신됨: {}", type);
         }
     }
 
+    // 소켓 실시간 양방향 매칭 - 구현 완료
     private void sendMatchedMessageToBoth(int gameId, Set<Session> sessions) throws IOException {
         GameDAO gameDAO = GameDAO.INSTANCE;
         UserDAO userDAO = UserDAO.INSTANCE;
@@ -134,6 +113,52 @@ public class MatchWebSocket {
             response.addProperty("player1", game.getPlayer1()); // ✅ 이 줄 추가!
 
             s.getBasicRemote().sendText(response.toString());
+        }
+    }
+
+    //채팅 브로드캐스트
+    //세창님께서 구현하신 @OnMessage 메서드에서 채팅 메시지를 처리하는 부분을 그대로 붙였습니다.
+    private void handleChatMessage(JsonObject receivedJson, Set<Session> sessions) throws IOException {
+        // 보낸 사람 ID → 세션에서 가져올 수도 있고, 메시지에 같이 보낼 수도 있음
+        String senderId = receivedJson.get("senderId").getAsString();
+
+        String text = receivedJson.get("message").getAsString();
+        // JSON 문자열 이스케이프 (안정성 보완)
+        String escaped = text
+                .replaceAll("\\\\", "\\\\\\\\")
+                .replaceAll("\"", "\\\\\"")
+                .replaceAll("\n", "\\\\n");
+
+        // JSON 형태로 재구성
+        String payload = String.format(
+                "{\"type\":\"chat\", \"senderId\":\"%s\", \"text\":\"%s\"}",
+                senderId, escaped
+        );
+
+        synchronized (sessions) {
+            for (Session s : sessions) {
+                if (s.isOpen()) {
+                    s.getBasicRemote().sendText(payload);
+                }
+            }
+        }
+    }
+
+    //오목 이동 브로드캐스트
+    //미완.... 개발하고 여기에 붙여야 한다.
+    private void handleMoveMessage(JsonObject receivedJson, Set<Session> sessions) throws IOException {
+        int x = receivedJson.get("x").getAsInt();
+        int y = receivedJson.get("y").getAsInt();
+        String userId = receivedJson.get("userId").getAsString();
+
+        JsonObject response = new JsonObject();
+        response.addProperty("type", "move");
+        response.addProperty("x", x);
+        response.addProperty("y", y);
+        response.addProperty("userId", userId);
+
+        for (Session s : sessions) {
+            if (s.isOpen()) s.getBasicRemote().sendText(response.toString());
         }
     }
 

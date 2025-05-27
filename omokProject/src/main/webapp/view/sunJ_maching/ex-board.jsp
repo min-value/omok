@@ -1,4 +1,4 @@
-
+<%--우리 게임 하는 화면은 WEB-INF에 넣을 경우, 여기 링킹하는거 수정해야 한다!!!! (Controller에서 하는거로.... 그래서 시간 없으면 그냥 빼둬도 괜찮다.)--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,9 +64,9 @@
 <script src="board.js"></script>
 
 <%--여기에 웹소켓 + 매칭 관련 스크립트 추가--%>
-<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/modal-ui.js"></script>
+<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/modal-ui.js"></script>
 <script src="${pageContext.request.contextPath}/view/sunJ_maching/js/websocket.js"></script>
-<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/match-init.js"></script>
+<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/match-init.js"></script>
 
 </body>
 </html>

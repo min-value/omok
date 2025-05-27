@@ -1,5 +1,6 @@
 .timer {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     height: 16px;
     background: #fff;
     border-radius: 8px;

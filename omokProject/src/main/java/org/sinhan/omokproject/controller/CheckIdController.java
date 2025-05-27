@@ -16,7 +16,7 @@ public class CheckIdController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("userId");
 
-        LoginService service = new LoginService();
+        LoginService service = LoginService.INSTANCE; //싱글톤으로 서비스 객체를 가져온다.
         boolean exist = service.isExistId(userId);
 
         // JSON으로 보내야 하므로

@@ -5,11 +5,12 @@ import org.sinhan.omokproject.domain.UserVO;
 import org.sinhan.omokproject.repository.LoginDAO;
 
 @Log4j2
-public class LoginService {
+public enum LoginService {
+    INSTANCE;
     // 사용하는건 미리 빼두기
     private LoginDAO dao;
 
-    public LoginService(){
+    LoginService(){
         dao = LoginDAO.INSTANCE;
     }
 
@@ -22,5 +23,11 @@ public class LoginService {
     public boolean isExistId(String userId){
         return dao.isExistUserById(userId);
     }
+
+    //회원가입을 위함
+    public int signUp(UserVO vo){
+        return dao.insertUser(vo);
+    }
+
 
 }

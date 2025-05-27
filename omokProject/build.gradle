@@ -60,7 +60,6 @@ dependencies {
 
     //jstl
     implementation 'javax.servlet:jstl:1.2'
-
 }
 
 test {

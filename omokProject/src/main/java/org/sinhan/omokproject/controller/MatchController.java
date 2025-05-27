@@ -1,4 +1,4 @@
-package org.sinhan.omokproject.controller.sunJMatchingController;
+package org.sinhan.omokproject.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

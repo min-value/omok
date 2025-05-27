@@ -13,13 +13,16 @@ function openWebSocket(gameId) {
     socket.onerror = (e) => console.error("❌ WebSocket 오류", e);
     socket.onclose = () => console.warn("⚠️ WebSocket 연결 종료");
 
+    //소켓 수신 메세지 처리
+    //data.status의 경우는 matching 로직만 사용한다.
+    //data.type의 경우는 채팅과 돌 놓는 로직에서 사용한다.
+    //채팅 메세지 처리할때 사용하는 socket.onmessage 내부 로직과, 돌 놓을때 처리하는 socket.onmessage 내부 로직은 맡은 사람이 여기에 메서드로 구현해야 한다.
     socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
 
         if (data.status === "WAITING") {
             // 이건 매칭에 쓰임. 상대방이 아직 없는 상태
             handleWaitingStatus(data);
-
         } else if (data.status === "MATCHED") {
             // 이건 매칭에 쓰임. 상대방이 들어와서 matched 된 상태
             handleMatchedStatus(data);

@@ -60,6 +60,9 @@ dependencies {
 
     //jstl
     implementation 'javax.servlet:jstl:1.2'
+
+    //json 파싱을 위한 의존성 추가
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 test {

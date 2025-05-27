@@ -1,3 +1,60 @@
+// WebSocket 연결
+const roomId = prompt("입장할 방 ID를 입력하세요", "room123");
+const socket = new WebSocket("ws://localhost:8080/game");
+
+socket.onopen = function () {
+    console.log("서버와 연결되었습니다.");
+    socket.send(JSON.stringify({
+        type: "join",
+        roomId: roomId
+    }));
+};
+// 서버로부터 메시지 수신
+let myRole = 0; // 1=흑, 2=백
+
+socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+
+    if (data.type === "role") {
+    myRole = data.role;
+    alert(data.message);
+    } else if (data.type === "boardReset") {
+        // 이전 방 데이터 초기화
+        for (let r = 0; r < boardSize; r++) {
+            for (let c = 0; c < boardSize; c++) {
+                board[r][c] = 0;
+            }
+        }
+        sessionStorage.removeItem('board');
+        sessionStorage.removeItem('turn');
+        currentTurn = 1;
+
+        // 보드 화면 초기화
+        rerenderStones();
+    } else if (data.type === "stone") {
+        const row = data.row;
+        const col = data.col;
+        const stone = data.stone;
+
+        if (board[row][col] === 0) {
+            board[row][col] = stone;
+            renderStone(row, col, stone);
+            currentTurn = stone === 1 ? 2 : 1;
+            saveBoardToSession();
+        }
+    } else if (data.type === "gameover") {
+        const winner = data.winner; // 1 또는 2
+        if (myRole === winner) {
+            alert("축하합니다! 승리하셨습니다!");
+        } else {
+            alert("패배했습니다. 다음 기회에!");
+        }
+        location.reload();
+    }
+};
+
+
+//오목 돌 배치
 const boardSize = 15;
 const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0));
 let currentTurn = 1;
@@ -85,7 +142,10 @@ function createHoverStone() {
 
 boardElement.addEventListener("mousemove", (e) => {
     if (!hoverStone) createHoverStone();
-
+    if (myRole !== currentTurn) {
+        if (hoverStone) hoverStone.style.display = 'none';
+        return;
+    }
     const rect = boardImage.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -125,9 +185,25 @@ boardElement.addEventListener("click", (e) => {
 
 function placeStone(row, col) {
     if (board[row][col] !== 0) return;
+    if (myRole !== currentTurn) {
+        alert("현재 당신 차례가 아닙니다.");
+        return;
+    }
+    if (myRole === 0) {
+        alert("아직 역할이 할당되지 않았습니다.");
+        return;
+    }
 
     board[row][col] = currentTurn;
     renderStone(row, col);
+
+    const msg = {
+        type: "stone",
+        row: row,
+        col: col,
+        stone: currentTurn
+    };
+    socket.send(JSON.stringify(msg));
 
     if (checkWin(row, col, currentTurn)) {
         setTimeout(() => {

@@ -285,8 +285,6 @@ body {
 
 .logo_wrapper {
     height: 100%;
-    -webkit-animation: logo-move 1s ease-in-out infinite;
-    animation: logo-move 1s ease-in-out infinite;
 }
 
 
@@ -508,10 +506,7 @@ textarea.bio_text {
     background-image: url("../../img/start_btn.png");
     background-repeat: no-repeat;
     background-size: contain;
-
     animation: jittery 4s infinite;
-
-
 }
 
 /*

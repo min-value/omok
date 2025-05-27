@@ -27,6 +27,58 @@
     }
 }
 
+/*
+start btn 움직임
+ */
+@keyframes jittery {
+    5%,
+    50% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(0.9);
+    }
+
+    15% {
+        transform: scale(1.15);
+    }
+
+    20% {
+        transform: scale(1.15) rotate(-5deg);
+    }
+
+    25% {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    30% {
+        transform: scale(1.15) rotate(-3deg);
+    }
+
+    35% {
+        transform: scale(1.15) rotate(2deg);
+    }
+
+    40% {
+        transform: scale(1.15) rotate(0);
+    }
+}
+
+@keyframes jelly {
+    25% {
+        transform: scale(0.9, 1.1);
+    }
+
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+
+    75% {
+        transform: scale(0.95, 1.05);
+    }
+}
+
 body {
     background-image: url("../../img/background2.png");
     background-size: cover;
@@ -413,7 +465,7 @@ textarea.bio_text {
     width: 80%;
     aspect-ratio: 1 / 1;
     border-radius: 2vw;
-    background-image: url("../../img/profile/1.png");
+    background-image: url("../../img/profile/2.png");
     background-color: skyblue;
     background-size: cover;
     background-position: center;
@@ -456,4 +508,42 @@ textarea.bio_text {
     background-image: url("../../img/start_btn.png");
     background-repeat: no-repeat;
     background-size: contain;
+
+    animation: jittery 4s infinite;
+
+
 }
+
+/*
+#start_btn:hover {
+    animation: jelly 0.5s;
+}
+
+.start_btn-fill {
+    transition: 0.3s;
+}
+
+.start_btn-open {
+    transition: 0.3s;
+    position: relative; /* ::before를 위해 부모도 상대 위치 설정 필요
+    overflow: hidden;   /* ::before 애니메이션 효과 클리핑을 위해 필요
+}
+
+.start_btn-open::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0);
+    transition: 0.3s;
+    transform-origin: left;
+}
+
+
+.start_btn-open:hover::before {
+    transform: scaleX(1);
+}
+*/

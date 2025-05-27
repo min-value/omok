@@ -47,6 +47,18 @@ $(window).ready(function(){
             }
         }
     });
+
+    $('#logout-btn img').hover(
+        function() {
+            $('#avatar')
+                .css('background-image', 'url("../../img/profile/2_sad.png")')
+        },
+        function() {
+            $('#avatar')
+                .css('background-image', 'url("../../img/profile/2.png")');
+        }
+    );
+
 });
 
 function setBioBorder(editing) {

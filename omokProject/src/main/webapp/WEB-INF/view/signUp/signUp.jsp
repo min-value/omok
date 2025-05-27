@@ -12,17 +12,35 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/view/signUp/css/title-animation.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/music/css/bgm-button-style.css">
 
+  <%--  회원가입 에러 모달 사용을 위해서 로그인 에러 모달 재활용...--%>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/view/login/css/login-error-modal-style.css">
+
   <script src="${pageContext.request.contextPath}/view/signUp/js/bio-text-counter.js"></script>
   <script src="${pageContext.request.contextPath}/view/signUp/js/profile-random.js"></script>
   <script src="${pageContext.request.contextPath}/view/signUp/js/id-check.js"></script>
   <script src="${pageContext.request.contextPath}/view/signUp/js/password-check-and-register.js"></script>
   <script src="${pageContext.request.contextPath}/music/js/bgm-control.js"></script>
   <script src="${pageContext.request.contextPath}/music/js/sound-effect-control.js"></script>
+  <script src="${pageContext.request.contextPath}/view/signUp/js/signup-error-modal.js"></script>
 </head>
 <body>
 <button id="music-btn" class="music-off"></button>
 <audio id="bgm" src="../../../music/bgm.mp3" loop></audio>
 <audio id="click-sound" src="../../../music/bubble-click-sound.mp3" preload="auto"></audio>
+
+<%--여기에 custom alert을 기본 속성 hidden으로 둬야 한다.--%>
+<div id="customAlert" class="hidden">
+  <div class="alertBox-wrapper">
+    <img src="${pageContext.request.contextPath}/img/id_error/id_error.png" class="alertBox-bg" />
+    <div class="alert-content">
+      <div id="alert_header">
+        <img src="${pageContext.request.contextPath}/img/id_error/error_title.png" class="alert-title">
+      </div>
+      <p id="alertMsg">회원가입에 실패했습니다.</p>
+      <button class="sound-button" id="alert_button" onclick="closeAlert()">확인</button>
+    </div>
+  </div>
+</div>
 
 <div class="sign-up">
   <div class="sign-up__title">

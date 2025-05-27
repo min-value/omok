@@ -44,7 +44,7 @@ public class SignUpController extends HttpServlet {
             //회원가입 실패시
             //이거에 대한 대응은 아직 구현 안함....이건 필요하면 구현하기
             //여기 attribute로 에러 메세지를 담아서 전달한다.
-            req.setAttribute("error", "회원가입에 실패했습니다. 다시 시도해주세요.");
+            req.setAttribute("error", "회원가입에 실패했습니다.");
             resp.sendRedirect("/sign-up?error=1"); //error 파라미터를 넘긴다.
         }
     }

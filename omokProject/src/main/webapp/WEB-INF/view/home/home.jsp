@@ -103,5 +103,7 @@
     const ranks = <%= new com.google.gson.Gson().toJson(ranks) %>;
     const myRank = <%= myRank %>;
 </script>
+<%--나중에 main 화면의 start 버튼에 이거 붙이면 된다.--%>
+<script src = "${pageContext.request.contextPath}/view/sunJ_maching/js/main/click-start-button.js"></script>
 </body>
 </html>

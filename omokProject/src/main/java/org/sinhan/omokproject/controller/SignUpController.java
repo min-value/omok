@@ -37,7 +37,7 @@ public class SignUpController extends HttpServlet {
         LoginService service = LoginService.INSTANCE; //싱글톤으로 서비스 객체를 가져온다.
         int cnt = service.signUp(vo);
 
-        if(cnt == 1){ //하나 인서트, 회원가입 성공
+        if(cnt == 2){ //하나 인서트, 회원가입 성공
             log.info("회원가입 성공 : {}", vo);
             resp.sendRedirect("/login"); //회원가입 성공시 로그인 페이지로 리다이렉트
         }else{

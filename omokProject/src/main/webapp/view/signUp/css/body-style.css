@@ -12,11 +12,16 @@ html, body {
     height: 100%;
     margin: 0 0;
     padding: 0 0;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 body {
     position: relative;
-    background: url("../../../img/background1.png") top center/cover no-repeat;
+    overflow: hidden; /* 스크롤 막기 */
+    /*백그라운드 이미지 조정*/
+    background-image: url("../../../img/background1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     display: flex;
     justify-content: center;
     align-items: center;

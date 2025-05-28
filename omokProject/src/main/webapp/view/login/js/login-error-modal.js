@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (error === "1") {
         showAlert("아이디 또는 비밀번호가 틀립니다."); //이를 통해 alertMsg 내부의 text를 받은 message로 설정
+
+        //url에서 searchParams 지워서 error 상태 삭제
+        const url = new URL(window.location);
+        url.searchParams.delete("error");
+        window.history.replaceState({}, document.title, url.pathname);
     }
 
     function showAlert(message){

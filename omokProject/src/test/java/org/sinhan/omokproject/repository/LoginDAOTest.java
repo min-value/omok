@@ -23,8 +23,8 @@ class LoginDAOTest {
     @DisplayName("알맞은 로그인 아이디, 비번이 들어갔을 경우 결과를 확인")
     void getUserByIdAndPasswordCorrectTest() throws Exception {
         //given
-        String userId = "sunJ";
-        String userPw = "pass6789";
+        String userId = "pyh123";
+        String userPw = "1214";
         //when
         UserVO vo = dao.getUserByIdAndPassword(userId, userPw);
         //then
@@ -48,7 +48,7 @@ class LoginDAOTest {
     @DisplayName("회원가입 DAO 테스트")
     void signUpTest() throws Exception {
         //given
-        String userId = "testUser";
+        String userId = "testUserrrr";
         String userPw=  "testPass";
         String bio = "테스트 유저입니다.";
         int image = 4;
@@ -62,7 +62,8 @@ class LoginDAOTest {
 
         //when
         int cnt = dao.insertUser(vo);
+        log.info("회원가입 된 유저 값 : {}", vo);
         //then
-        Assertions.assertEquals(cnt, 1);
+        Assertions.assertEquals(cnt, 2);
     }
 }

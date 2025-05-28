@@ -64,9 +64,9 @@
 <script src="board.js"></script>
 
 <%--여기에 웹소켓 + 매칭 관련 스크립트 추가--%>
-<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/modal-ui.js"></script>
-<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/websocket.js"></script>
-<script src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/match-init.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/modal-ui.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/view/sunJ_maching/js/websocket.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/view/sunJ_maching/js/match/match-init.js"></script>
 
 </body>
 </html>

@@ -1,3 +1,5 @@
+import {openWebSocket} from "../websocket.js";
+
 let youCache = null;
 let opponentCache = null;
 

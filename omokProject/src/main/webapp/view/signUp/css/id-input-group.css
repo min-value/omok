@@ -38,6 +38,8 @@
 /* focus border 추가 */
 input[type="text"]:focus {
     outline: none;
+    /*박스 안 밀리게 border-box 추가*/
+    box-sizing: border-box;
     border: #207600 solid 5px;
 }
 
@@ -47,7 +49,8 @@ input[type="text"] {
     padding: 10px 16px;
     font-size: clamp(24px, 3vw, 36px);
     border-radius: 10px;
-    border: none;
+    /* border 공간을 항상 확보 */
+    border: 5px solid transparent;
     box-sizing: border-box;
     min-width: 0;
 }

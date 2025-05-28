@@ -1,5 +1,10 @@
-let youCache = null;
-let opponentCache = null;
+import {openWebSocket} from "../websocket.js";
+
+//안정적인 export를 위해 객체로 감싸기
+export const cache = {
+    youCache: null,
+    opponentCache: null
+};
 
 // AJAX로 초기 상태 확인
 window.addEventListener("DOMContentLoaded", () => {
@@ -23,8 +28,8 @@ window.addEventListener("DOMContentLoaded", () => {
             const status = data.game.status;
 
             // 유저 정보 저장, 이건 왜 넣는거징. 일단 넣어보자.
-            youCache = data.you;
-            opponentCache = data.opponent || null;
+            cache.youCache = data.you;
+            cache.opponentCache = data.opponent || null;
 
             openWebSocket(gameId); // 소켓 연결
 

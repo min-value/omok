@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("startBtn").addEventListener("click", startGame);
+    document.getElementById("start_btn").addEventListener("click", startGame);
 });
 
 function startGame() {
@@ -21,6 +21,7 @@ function startGame() {
             //로그 찍기 용
             console.log("서버 응답:", data); // 🔍 응답 구조 확인용
             const gameId = data.game.gameId;
-            location.href = `ex-board.jsp?gameId=${gameId}`;
+            //로케이션 경로 변경
+            location.href = `/omok/play?gameId=${gameId}`;
         });
 }

@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
 
         //로그인 실패시 대응 만들기
         //세션에 메세지를 잠시 담아둔다.
+        //여기서 sendRedirect 해도 js에서 파라미터 지워 주기 때문에 error=1 남는거 해결 된다.
         if (user == null) {
             HttpSession session = req.getSession();
             session.setAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");

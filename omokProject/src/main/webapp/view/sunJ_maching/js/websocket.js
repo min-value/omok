@@ -10,13 +10,12 @@ import * as Modal from "../js/match/modal-ui.js";
 // 접속자, 상대방 정보 저장용 전역변수
 let youCache = null;
 let opponentCache = null;
-export let socket = null;
 
 export let currentTurn = 1;  // 1=흑돌(선공), 2=백돌(후공)
 export let myRole = 0;// 0=미할당, 1=흑, 2=백
 
 export function openWebSocket(gameId) {
-    socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
+    const socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
 
     //확인용 로그
     socket.onopen = () => console.log("✅ WebSocket 연결됨");
@@ -228,14 +227,14 @@ export function openWebSocket(gameId) {
             ? "🎉 당신이 승리했습니다!"
             : "😢 패배하셨습니다.";
 
-        setTimeout(() => {
+        // setTimeout(() => {
             alert(resultMessage);
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
             // location.reload();
             const gameId = getGameIdFromURL();
             showResultModal(gameId);
-        }, 100);
+        // }, 100);
     }
     
     // 게임 결과 모달 띄우기
@@ -263,7 +262,7 @@ export function openWebSocket(gameId) {
 
                     // 다시 버튼 이벤트 등록
                     modal.querySelector('#go_main_btn').addEventListener("click", () => {
-                        socket.close(); // 소켓끊기
+                        socket.onclose = () => console.warn("⚠️ WebSocket 연결 종료");
                         location.href = "/omok/main";
                     });
 

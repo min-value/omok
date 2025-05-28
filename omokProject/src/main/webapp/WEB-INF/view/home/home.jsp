@@ -1,8 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" import="java.util.*"%>
 <%@ page import="org.sinhan.omokproject.domain.UserVO" %>
+<%@ page import="org.sinhan.omokproject.domain.UserStatVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     UserVO userInfo = (UserVO) session.getAttribute("loginInfo");
+    List<UserStatVO> ranks = (List<UserStatVO>) request.getAttribute("ranks");
+    if (ranks == null) {
+        ranks = new ArrayList<>();
+    }
+    int myRank = (int) request.getAttribute("myRank");
 %>
 
 <!DOCTYPE html>
@@ -15,8 +21,12 @@
     <script src="${pageContext.request.contextPath}/view/home/home_script.js" type="text/javascript"></script>
 </head>
 <body>
-<div id="logout-btn">
-    <img src="../../img/logout_icon.png" alt="로그아웃" />
+<div id="logout_btn">
+    <form id="logoutForm" action="/logout" method="POST">
+        <button type="submit" style="background:none; border:none; padding:0; cursor:pointer;">
+            <img src="../../img/logout_icon.png" alt="로그아웃" />
+        </button>
+    </form>
 </div>
 <div id="full_box">
     <div id="section1">
@@ -24,55 +34,8 @@
         <img src="../../img/rank_background.png" id="rank_background" alt="랭킹박스">
         <div id="ranking">
             <div id="ranking_section">
-                <div class="rank_item">
-                    <div class="rank_item_background">
-                        <div class="rank_num">1</div>
-                        <div class="rank_user_image_wrapper">
-                            <img src="../../img/profile/1.png" class="rank_user_image" alt="유저 프로필 이미지">
-                        </div>
-                        <div class="rank_user_id">sukong</div>
-                        <div class="rank_user_rate">
-                            <img src="../../img/win_icon.png" class="win_icon" alt="승리아이콘">
-                            <span class="win_rate">100%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rank_item">
-                    <div class="rank_item_background">
-                        <div class="rank_num">1</div>
-                        <div class="rank_user_image_wrapper">
-                            <img src="../../img/profile/1.png" class="rank_user_image" alt="유저 프로필 이미지">
-                        </div>
-                        <div class="rank_user_id">sukong</div>
-                        <div class="rank_user_rate">
-                            <img src="../../img/win_icon.png" class="win_icon" alt="승리아이콘">
-                            <span class="win_rate">100%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rank_item">
-                    <div class="rank_item_background"></div>
-                </div>
-                <div class="rank_item">
-                    <div class="rank_item_background"></div>
-                </div>
-                <div class="rank_item">
-                    <div class="rank_item_background"></div>
-                </div>
-                <div class="rank_item">
-                    <div class="rank_item_background"></div>
-                </div>
             </div>
             <div id="my_rank">
-                <div class="rank_num">1</div>
-                <div class="rank_user_image_wrapper">
-                    <img src="../../img/profile/1.png" class="rank_user_image" alt="유저 프로필 이미지">
-                </div>
-                <div class="rank_user_id">sukong</div>
-                <div class="rank_user_rate">
-                    <img src="../../img/win_icon.png" class="win_icon" alt="승리아이콘">
-                    <span class="win_rate">100%</span>
-                </div>
             </div>
         </div>
     </div>
@@ -125,9 +88,8 @@
             </div>
         </div>
         <div id="button_section">
-            <!--
-            <button id="start_btn">START</button>-->
-            <img src="../../img/start_btn.png" id="start_btn" alt="시작버튼">
+            <button id="start_btn" class="img-button">
+            </button>
         </div>
     </div>
 </div>
@@ -138,9 +100,8 @@
     let loseNum = <%= userInfo.getLose() %>;
     let imageNum = <%= userInfo.getImage() %>;
     let winRate = <%= userInfo.getRate() %>;
-
-    setProfile(userId, userBio, winNum, loseNum, imageNum);
-    setBar(winRate);
+    const ranks = <%= new com.google.gson.Gson().toJson(ranks) %>;
+    const myRank = <%= myRank %>;
 </script>
 </body>
 </html>

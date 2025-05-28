@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>OMOK</title>
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.warn("무시된 에러:", message, "@", source + ":" + lineno);
+            return true;  // true를 반환하면 에러가 전파되지 않고 나머지 스크립트가 계속 실행됨
+        };
+    </script>
     <link rel="stylesheet" href="board.css" />
 </head>
 <body>
@@ -20,6 +26,6 @@
     </div>
 </div>
 
-<script src="board.js"></script>
+<script src="Websocket.js"></script>
 </body>
 </html>

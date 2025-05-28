@@ -1,96 +1,77 @@
-// 메세지 내역 렌더링
-function loadMsg(mid) {
-    const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
-    // 배열의 길이가 0(아무 아이디도 없을 때) 는 렌더링 X
-    if (myIds.length === 0) return;
-    // 렌더링 전 화면 초기화하기
-    mid.innerHTML = '';
+// chatscript.js
 
-    // 배열이 비었을경우 '[]'로 빈 배열 선언
-    // + 이전 채팅 내역이 없어 배열이 없을 경우 null값이라 파싱에서 오류가 남
+// 1) 전역 선언
+const params   = new URLSearchParams(window.location.search);
+const gameId   = params.get('gameId');
+const myUserId = JSON.parse(sessionStorage.getItem('myServerIds') || '[]')[0] || '';
+
+// 2) 메시지 내역 렌더링 (초기 로드)
+function loadMsg() {
+    const mid     = document.querySelector('.chat-mid');
+    mid.innerHTML = '';
     const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
-    // 배열을 순회하며
-    history.forEach(({senderId, text}) => {
-        const message = document.createElement('div');
-        message.className = (myIds.includes(senderId)) ? 'my-message' : 'other-message';
-        message.innerText = text;
-        mid.appendChild(message);
-    })
+    const myIds   = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
+
+    history.forEach(({ senderId, text }) => {
+        const div = document.createElement('div');
+        div.className = myIds.includes(senderId) ? 'msg mine' : 'msg other';
+        div.innerText = text;
+        mid.appendChild(div);
+    });
+
+    mid.scrollTop = mid.scrollHeight;
 }
 
-// 메세지 저장 함수
+// 3) 메시지 저장
 function saveMsg(senderId, text) {
-    // 채팅 내역을 세션에 객체 배열로 저장 (파싱)
-    // + 이전 채팅 내역이 없어 배열이 없을 경우 null값이라 forEach 에러남
-    // 채팅 내용이 없을 경우 '[]'로 빈 배열 선언
     const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
-    // history에 senderid와 text push해줌
-    history.push({senderId, text});
-    // 문자열 형식으로 chatHistory에 저장
+    history.push({ senderId, text });
     sessionStorage.setItem('chatHistory', JSON.stringify(history));
 }
 
-// 메시지 전송 함수
-function sendMsg(socket, input) {
+// 4) 화면에 채팅 말풍선 그리기
+function appendChatBubble(senderId, text) {
+    const mid   = document.querySelector('.chat-mid');
+    const div   = document.createElement('div');
+    const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
+    div.className = myIds.includes(senderId) ? 'msg mine' : 'msg other';
+    div.innerText  = text;
+    mid.appendChild(div);
+    mid.scrollTop  = mid.scrollHeight;
+}
+
+function appendBubble(mid, senderId, text) {
+    const div = document.createElement('div');
+    const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
+    div.className = myIds.includes(senderId) ? 'my-message' : 'other-message';
+    div.innerText = text;
+    mid.appendChild(div);
+}
+
+// 5) 메시지 전송 함수
+function sendMsg(input) {
     const text = input.value.trim();
     if (!text) return;
-    socket.send(text);
+
+    const msgObj = { type: 'chat', senderId: myUserId, text };
+    // 실제 WebSocket 전송은 websocket.js 의 sendChat 호출
+    sendChat(msgObj);
+
+    appendChatBubble(myUserId, text);
+    saveMsg(myUserId, text);
     input.value = '';
 }
 
-// 소켓 초기화 함수
-function initSocket(onMessage) {
-    const socket = new WebSocket("ws://localhost:8090/chat");
-    socket.onopen = () => console.log("소켓 열림");
-    socket.onerror = err => console.log("에러 ", err);
-    socket.onclose = () => console.log("소켓 닫힘");
-    socket.onmessage = onMessage;
-    return socket;
-}
-
-// DOM 준비 후 초기화 로직
-window.onload = function() {
+// 6) DOM 준비 후 초기화
+window.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector('.chat-input');
-    const mid = document.querySelector('.chat-mid');
-    const btn = document.querySelector('.send-btn');
+    const btn   = document.querySelector('.send-btn');
 
-    // myId 초기화
-    // onload마다 아이디를 초기화 할 필요 X
-    // sessionStorage.removeItem('myId');
+    loadMsg();
 
-    // 소켓 연결 & 메시지 처리 콜백 등록
-    const socket = initSocket(evt => {
-        const { senderId, text } = JSON.parse(evt.data);
-
-        // 최초 INIT 메시지 처리
-        if (text === "__INIT__") {
-            // 내 서버 아이디 배열 꺼내기
-            let myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
-            // 새로운 id가 배열에 없을 시 추가
-            if (!myIds.includes(senderId)) {
-                myIds.push(senderId);
-                sessionStorage.setItem('myServerIds', JSON.stringify(myIds));
-            }
-            // 여기서 load
-            // 저장된 hisotry + 내 모든 세션 아이디 렌더링
-            loadMsg(mid);
-            return;
-        }
-
-        // 실제 메시지 렌더링
-        // myIds에 객체 배열로 저장한 id 불러오기
-        const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
-        const message = document.createElement('div');
-        message.className = (myIds.includes(senderId)) ? 'my-message' : 'other-message';
-        message.innerText = text;
-        saveMsg(senderId, text);
-        mid.appendChild(message);
-        mid.scrollTop = mid.scrollHeight;
-    });
-
-    // 버튼/엔터 이벤트 바인딩
-    btn.addEventListener('click', () => sendMsg(socket, input));
+    // 버튼 이벤트만 바인딩
+    btn.addEventListener('click', () => sendMsg(input));
     input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') sendMsg(socket, input);
+        if (e.key === 'Enter') sendMsg(input);
     });
-};
+});

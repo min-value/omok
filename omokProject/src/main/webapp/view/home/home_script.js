@@ -47,10 +47,21 @@ $(window).ready(function(){
         }
     );
 
-    /* 시작 버튼 리스너 */
-    $('#start_btn').on('click', function() {
-        location.assign("/omok/game");
-    })
+    $('#start_btn').on('click', function(e) {
+        e.preventDefault(); // 혹시 기본 동작 차단
+        const clickSound = document.getElementById("click-sound");
+        clickSound.currentTime = 0;
+        clickSound.play().then(() => {
+            // 효과음 재생 성공 후 200ms 뒤 페이지 이동
+            setTimeout(() => {
+                location.assign("/omok/game");
+            }, 200);
+        }).catch(err => {
+            console.error("효과음 재생 실패:", err);
+            // 실패해도 바로 이동
+            location.assign("/omok/game");
+        });
+    });
 
     /* 랭킹(1-10위) 업데이트 */
     setRankingList(ranks);

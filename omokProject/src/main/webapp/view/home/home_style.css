@@ -509,8 +509,8 @@ textarea.bio_text {
 
 #start_btn {
     cursor: pointer;
-    height: 70%;
-    width : 20%;
+    height: 60%;
+    aspect-ratio: 1.9 / 1; /* 예: 너비:높이 = 2:1 이미지일 경우 */
     border: none;
     background-color: transparent;
     background-image: url("../../img/start_btn.png");

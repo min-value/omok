@@ -21,7 +21,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/view/home/home_script.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/music/js/bgm-control.js"></script>
-    <script src="${pageContext.request.contextPath}/music/js/sound-effect-control.js"></script>
 </head>
 <body>
 <button id="music-btn" class="music-off"></button>
@@ -93,8 +92,8 @@
                 </div>
             </div>
         </div>
-        <div id="button_section" class="sound-button">
-            <button id="start_btn"></button>
+        <div id="button_section" >
+            <button id="start_btn" class="sound-button"></button>
         </div>
     </div>
 </div>

@@ -7,16 +7,17 @@ ajax에서 부르기 위해 함수로 구성
  */
 import * as Omok from "../../game/board/board.js";
 import * as Modal from "../js/match/modal-ui.js";
-// 접속자, 상대방 정보 저장용 전역변수
-let youCache = null;
-let opponentCache = null;
-export let socket = null;
+import { cache } from "./match/match-init.js";
+
+// // 접속자, 상대방 정보 저장용 전역변수
+// let youCache = null;
+// let opponentCache = null;
 
 export let currentTurn = 1;  // 1=흑돌(선공), 2=백돌(후공)
 export let myRole = 0;// 0=미할당, 1=흑, 2=백
 
 export function openWebSocket(gameId) {
-    socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
+    const socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
 
     //확인용 로그
     socket.onopen = () => console.log("✅ WebSocket 연결됨");
@@ -34,10 +35,10 @@ export function openWebSocket(gameId) {
             // 이건 매칭에 쓰임. 상대방이 아직 없는 상태
             handleWaitingStatus(data);
         } else if (data.status === "MATCHED") {
-            youCache = data.you;
-            console.log(youCache);
-            opponentCache = data.opponent;
-            myRole = (youCache.id.trim() === data.player1.trim()) ? 1 : 2;
+            cache.youCache = data.you;
+            console.log(cache.youCache);
+            cache.opponentCache = data.opponent;
+            myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
             currentTurn = 1;
 
             updateTurnIndicator(currentTurn === myRole);
@@ -71,7 +72,7 @@ export function openWebSocket(gameId) {
         if (Omok.board[x][y] !== 0) return; // 이미 돌이 있으면 무시
 
         // 사용자 아이디가 내 아이디면 내 역할, 아니면 상대 역할
-        const stone = (userId === youCache.id) ? myRole : (myRole === 1 ? 2 : 1);
+        const stone = (userId === cache.youCache.id) ? myRole : (myRole === 1 ? 2 : 1);
 
         Omok.board[x][y] = stone;
         Omok.renderStone(x, y, stone);
@@ -90,7 +91,7 @@ export function openWebSocket(gameId) {
 
     // 돌 놓기 요청 시 호출
     function placeStone(row, col) {
-        if (!youCache || myRole === 0) {
+        if (!cache.youCache || myRole === 0) {
             alert("아직 역할이 할당되지 않았습니다.");
             return;
         }
@@ -111,7 +112,7 @@ export function openWebSocket(gameId) {
             type: "move",
             x: row,
             y: col,
-            userId: youCache.id,
+            userId: cache.youCache.id,
         };
 
         socket.send(JSON.stringify(message));
@@ -143,7 +144,7 @@ export function openWebSocket(gameId) {
 
             const message = {
                 type: "gameover",
-                userId: youCache.id,
+                userId: cache.youCache.id,
             };
             socket.send(JSON.stringify(message));
         }
@@ -224,7 +225,7 @@ export function openWebSocket(gameId) {
     function gameOver(data) {
         if (Omok.hoverStone) Omok.hoverStone.style.display = 'none';
 
-        const resultMessage = (data.winnerId === youCache.id)
+        const resultMessage = (data.winnerId === cache.youCache.id)
             ? "🎉 당신이 승리했습니다!"
             : "😢 패배하셨습니다.";
 
@@ -232,66 +233,18 @@ export function openWebSocket(gameId) {
             alert(resultMessage);
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
-            // location.reload();
-            const gameId = getGameIdFromURL();
-            showResultModal(gameId);
+            location.reload();
         }, 100);
     }
-    
-    // 게임 결과 모달 띄우기
-    function showResultModal(gameId) {
-        fetch(`/view/modal/result/result.jsp?gameId=` + gameId)
-            .then(response => response.text())
-            .then(html => {
-                // 임시로 div 생성해서 응답 HTML을 담음
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-
-                // #modal 요소만 추출
-                const modal = tempDiv.querySelector('#modal');
-
-                if (modal) {
-                    // 기존에 이미 모달이 있으면 삭제
-                    const oldModal = document.querySelector('#modal');
-                    if (oldModal) oldModal.remove();
-
-                    // 모달을 body에 추가
-                    document.body.appendChild(modal);
-
-                    // 모달 보여주기
-                    modal.style.display = 'flex';
-
-                    // 다시 버튼 이벤트 등록
-                    modal.querySelector('#go_main_btn').addEventListener("click", () => {
-                        socket.close(); // 소켓끊기
-                        location.href = "/omok/main";
-                    });
-
-                    modal.querySelector('#re_btn').addEventListener("click", () => {
-                        modal.style.display = "none";
-                        // 다시 시작 기능이 있다면 이곳에서 로직 작성
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("결과 모달 불러오기 실패", error);
-            });
-    }
-    // 게임 아이디 받기
-    function getGameIdFromURL() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('gameId');
-    }
-
 
     /* -------여기 아래 두개는 매칭용으로 개발 완료된 것임. 건들면 안된다!!!------- */
     function handleWaitingStatus(data) {
-        Modal.renderPlayer("you", youCache);
+        Modal.renderPlayer("you", cache.youCache);
         document.querySelector(".vs-text").style.display = "none";
         document.getElementById("player2-wrapper").style.display = "none";
 
         // ✅ youCache에서 내 정보 가져와서 돌 배치
-        Modal.setStones(youCache.id, youCache.id); // player1 === you
+        Modal.setStones(cache.youCache.id, cache.youCache.id); // player1 === you
 
         Modal.openModal();
     }
@@ -306,8 +259,8 @@ export function openWebSocket(gameId) {
 
         /*
         ✅ WebSocket 연결됨
-            ex-board.jsp?gameId=63:124 내정보: {id: 'sunJ', rate: 0, img: 6}id: "sunJ"img: 6rate: 0[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
-            ex-board.jsp?gameId=63:125 상대방과 매칭되었습니다:
+            game.jsp?gameId=63:124 내정보: {id: 'sunJ', rate: 0, img: 6}id: "sunJ"img: 6rate: 0[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+            game.jsp?gameId=63:125 상대방과 매칭되었습니다:
             rate가 안날라와서 확인 필요.
          */
 
@@ -319,7 +272,6 @@ export function openWebSocket(gameId) {
 
         setTimeout(() => {
             Modal.hideModal();
-            startGame();
         }, 2000);
     }
 }

@@ -3,6 +3,7 @@ package org.sinhan.omokproject.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.log4j.Log4j2;
 import org.sinhan.omokproject.domain.GameVO;
 import org.sinhan.omokproject.domain.UserVO;
 import org.sinhan.omokproject.repository.sunJMatchingDAO.GameDAO;
@@ -18,8 +19,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
+@Log4j2
 @WebServlet(displayName = "gameController", urlPatterns = "/omok/play")
 public class GameController extends HttpServlet {
+
+    //포워딩 테스트 하기 위해 붙임.
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String gameId = req.getParameter("gameId");
+        req.setAttribute("gameId", gameId);
+
+        log.info("~~~~~게임 컨트롤러 입장~~~~~");
+
+        // JSP로 포워딩
+        // 일단 테스트는 이렇게 하고,, 된다 싶으면 WEB-INF로 옮긴다.
+        req.getRequestDispatcher("/WEB-INF/view/game/game.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

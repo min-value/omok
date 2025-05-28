@@ -17,8 +17,8 @@ public enum UserDAO {
 
     public UserVO findUserById(String userId) {
         String sql = "SELECT *\n" +
-                "FROM user AS u\n" +
-                "JOIN stat AS s\n" +
+                "FROM USER AS u\n" +
+                "JOIN STAT AS s\n" +
                 "ON u.user_id = s.user_id\n" +
                 "WHERE u.user_id = ?";
 

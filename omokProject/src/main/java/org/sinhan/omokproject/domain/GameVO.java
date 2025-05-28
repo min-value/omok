@@ -29,6 +29,9 @@ public class GameVO {
     private String player1;
     private String player2;
 
+    private int[][] board;
+    private int turn;
+
     // enum 정의
     public enum GameStatus {
         PLAYING,   // 게임 진행중

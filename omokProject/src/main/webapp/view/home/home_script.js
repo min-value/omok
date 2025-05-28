@@ -28,7 +28,7 @@ $(window).ready(function(){
     });
 
     /* 로그아웃 버튼 호버 리스너*/
-    $('#logout-btn img').hover(
+    $('#logout_btn img').hover(
         function() {
             $('#avatar')
                 .css('background-image', 'url(' + sadImgUrl + ')');

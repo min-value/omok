@@ -107,6 +107,180 @@ function appendBubble(mid, senderId, text) {
     mid.scrollTop = mid.scrollHeight;
 }
 
+// 돌을 놓는 메시지 처리 처리용 js인 drawStone(data.x, data.y, data.userId); 구현 필요
+// 마우스 클릭하여 돌 두기
+// 돌을 놓는 메시지 처리
+function drawStone(data) {
+    const { x, y, userId } = data;
+
+    if (Omok.board[x][y] !== 0) return; // 이미 돌이 있으면 무시
+
+    // 사용자 아이디가 내 아이디면 내 역할, 아니면 상대 역할
+    const stone = (userId === cache.youCache.id) ? myRole : (myRole === 1 ? 2 : 1);
+
+    Omok.board[x][y] = stone;
+    Omok.renderStone(x, y, stone);
+    // 턴 교체
+    currentTurn = (stone === 1) ? 2 : 1;
+    updateTurnIndicator(currentTurn === myRole);
+
+    saveBoardToSession();
+
+    // 내 턴이면 hover 돌 유지, 아니면 숨김
+    if (Omok.hoverStone) {
+        Omok.hoverStone.style.display = (currentTurn === myRole) ? 'block' : 'none';
+    }
+}
+
+
+// 돌 놓기 요청 시 호출
+function placeStone(row, col) {
+    if (!cache.youCache || myRole === 0) {
+        alert("아직 역할이 할당되지 않았습니다.");
+        return;
+    }
+
+    if (currentTurn !== myRole) {
+        alert("현재 당신 차례가 아닙니다.");
+        return;
+    }
+
+    if (Omok.board[row][col] !== 0) {
+        alert("이미 돌이 놓여있는 자리입니다.");
+        return;
+    }
+    const stoneSound = new Audio("../../../music/stonesound.mp3");
+    stoneSound.play();
+
+    const message = {
+        type: "move",
+        x: row,
+        y: col,
+        userId: cache.youCache.id,
+    };
+
+    socket.send(JSON.stringify(message));
+}
+
+// 턴 UI 업데이트 함수 (예: 알림, 턴 표시)
+function updateTurnIndicator(isMyTurn) {
+    const turnIndicator = document.getElementById("turn-indicator");
+    if (turnIndicator) {
+        turnIndicator.textContent = isMyTurn ? "당신의 턴입니다." : "상대방의 턴입니다.";
+    }
+}
+
+// 클릭 이벤트 등록: 돌 놓기
+Omok.boardElement.addEventListener("click", (e) => {
+    const rect = Omok.boardImage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cell = Omok.getCellFromMousePosition(x, y);
+    if (!cell) return;
+
+    placeStone(cell.row, cell.col);
+
+    if (Omok.checkWin(cell.row, cell.col, currentTurn)) {
+        setTimeout(() => {
+            console.log((currentTurn === 1 ? "흑" : "백") + " 승리!");
+            location.reload();
+        }, 100);
+
+        const message = {
+            type: "gameover",
+            userId: cache.youCache.id,
+        };
+        socket.send(JSON.stringify(message));
+    }
+
+});
+
+// 마우스 이동 시 hover 돌 표시
+Omok.boardElement.addEventListener("mousemove", (e) => {
+    if (!Omok.hoverStone) Omok.createHoverStone();
+
+    if (myRole !== currentTurn) {
+        if (Omok.hoverStone) Omok.hoverStone.style.display = 'none';
+        return;
+    }
+
+    const rect = Omok.boardImage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cell = Omok.getCellFromMousePosition(x, y);
+
+    if (!cell || Omok.board[cell.row][cell.col] !== 0) {
+        Omok.hoverStone.style.display = 'none';
+        return;
+    }
+
+    Omok.hoverStone.style.display = 'block';
+    // 위치 맞춤 (gridStartX, cellSizeX 등은 board/board.js에 정의되어 있어야 함)
+    const left = Omok.gridStartX + cell.col * Omok.cellSizeX;
+    const top = Omok.gridStartY + cell.row * Omok.cellSizeY;
+    Omok.hoverStone.style.left = `${left}px`;
+    Omok.hoverStone.style.top = `${top}px`;
+    Omok.hoverStone.className = `stone hover ${currentTurn === 1 ? 'black' : 'white'}`;
+});
+
+Omok.boardElement.addEventListener("mouseleave", () => {
+    if (Omok.hoverStone) Omok.hoverStone.style.display = 'none';
+});
+
+// 윈도우 리사이즈 시 보드 재계산 및 재렌더링
+window.addEventListener("resize", () => {
+    Omok.calculateGridMetrics();
+    Omok.rerenderStones();
+    if (Omok.hoverStone) Omok.hoverStone.style.display = 'none';
+});
+
+// 페이지 로드 시 세션스토리지에서 보드 정보 복원
+window.onload = () => {
+    Omok.calculateGridMetrics();
+
+    const savedBoard = sessionStorage.getItem('board');
+    const savedTurn = sessionStorage.getItem('turn');
+
+    if (savedBoard) {
+        const parsedBoard = JSON.parse(savedBoard);
+        for (let r = 0; r < Omok.boardSize; r++) {
+            for (let c = 0; c < Omok.boardSize; c++) {
+                Omok.board[r][c] = parsedBoard[r][c];
+                if (Omok.board[r][c] !== 0) {
+                    Omok.renderStone(r, c, Omok.board[r][c]);
+                }
+            }
+        }
+    }
+
+    if (savedTurn) {
+        currentTurn = parseInt(savedTurn);
+        updateTurnIndicator(currentTurn === myRole);
+    }
+};
+
+// 보드 상태 저장 함수
+function saveBoardToSession() {
+    sessionStorage.setItem('board', JSON.stringify(Omok.board));
+    sessionStorage.setItem('turn', currentTurn);
+}
+
+//gameover
+function gameOver(data) {
+    if (Omok.hoverStone) Omok.hoverStone.style.display = 'none';
+
+    const resultMessage = (data.winnerId === cache.youCache.id)
+        ? "🎉 당신이 승리했습니다!"
+        : "😢 패배하셨습니다.";
+
+    setTimeout(() => {
+        alert(resultMessage);
+        sessionStorage.removeItem('board');
+        sessionStorage.removeItem('turn');
+        location.reload();
+    }, 100);
+}
+
 /* -------여기 아래 두개는 매칭용으로 개발 완료된 것임. 건들면 안된다!!!------- */
 function handleWaitingStatus(data) {
     Modal.renderPlayer("you", cache.youCache);

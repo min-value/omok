@@ -34,12 +34,17 @@
 
             <!-- Player 2 -->
             <div class="player" id="player2-wrapper">
-                <img id="stone2" src="${pageContext.request.contextPath}/img/white_stone.png" class="stone-image-white" alt="백돌"/>
-                <div class="card-bg"></div>
+                <img id="stone2" src="${pageContext.request.contextPath}/img/white_stone.png" class="stone-image-white hidden" alt="백돌"/>
+                <div class="card-bg2 hidden" id="card-bg2"></div>
                 <div class="player-card">
-                    <div class="profile-image2" id="profile2"></div>
-                    <div class="player-name" id="name2"></div>
-                    <div class="player-rate" id="rate2"></div>
+                    <!-- 로딩 아이콘은 waiting일 땐 보임, matched일 땐 숨김 -->
+                    <div class="player-loading" id="loading2">
+                        <img src="${pageContext.request.contextPath}/img/loading.png" alt="로딩중" class="loading-icon">
+                    </div>
+                    <!-- 상대방 정보는 waiting일 땐 숨김, matched일 땐 보임 -->
+                    <div class="profile-image2 hidden" id="profile2"></div>
+                    <div class="player-name hidden" id="name2"></div>
+                    <div class="player-rate hidden" id="rate2"></div>
                 </div>
             </div>
         </div>

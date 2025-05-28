@@ -7,16 +7,25 @@
 *{
     font-family: NeoDunggeunmo;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     position: relative;
+    min-height: 100vh;
     /*백그라운드 이미지 조정*/
     background-image: url("../../../img/background1.png");
     background-size: cover;
+    overflow: hidden;
     background-repeat: no-repeat;
     background-position: center center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: clamp(10px, 5vh, 60px) clamp(10px, 4vw, 40px);
     font-size: 1rem;
 }

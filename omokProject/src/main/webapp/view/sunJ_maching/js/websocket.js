@@ -8,6 +8,7 @@ ajax에서 부르기 위해 함수로 구성
 import * as Omok from "../../game/board/board.js";
 import * as Modal from "../js/match/modal-ui.js";
 import { cache } from "./match/match-init.js";
+import * as Chat from "../../game/chat/chatwindow/chatscript.js";
 
 // // 접속자, 상대방 정보 저장용 전역변수
 // let youCache = null;
@@ -44,9 +45,9 @@ export function openWebSocket(gameId) {
             updateTurnIndicator(currentTurn === myRole);
             // 이건 매칭에 쓰임. 상대방이 들어와서 matched 된 상태
             handleMatchedStatus(data);
-            loadMsg(mid);
+            loadMsg(Chat.mid);
         } else if (data.type === 'chat') {
-            appendBubble(mid, data.senderId, data.text);
+            appendBubble(Chat.mid, data.senderId, data.text);
             saveMsg(data.senderId, data.text);
         } else if (data.type === 'move') {
             drawStone(data);
@@ -56,59 +57,6 @@ export function openWebSocket(gameId) {
 
         }
     };
-
-    // 채팅 입력 이벤트 바인딩
-    btn.addEventListener('click', () => sendMsg(socket, input));
-    input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') sendMsg(socket, input);
-    });
-}
-
-// 1) 채팅 히스토리 렌더링
-function loadMsg(mid) {
-    const myIds = youCache.id;
-    mid.innerHTML = '';
-    const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
-    history.forEach(({ senderId, text }) => {
-        const div = document.createElement('div');
-        div.className = senderId === youCache.id ? 'my-message' : 'other-message';
-        div.innerText = text;
-        mid.appendChild(div);
-    });
-    mid.scrollTop = mid.scrollHeight;
-}
-
-// 2) 채팅 저장
-function saveMsg(senderId, text) {
-    const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
-    history.push({ senderId, text });
-    sessionStorage.setItem('chatHistory', JSON.stringify(history));
-}
-
-// 3)  서버에 채팅 전송
-function sendMsg(socket, input) {
-    const text = input.value.trim();
-    if (!text) return;
-    const payload = {
-        type : 'chat',
-        senderId : youCache.id || '',
-        message : text
-    };
-    socket.send(JSON.stringify(payload));
-    console.log(payload);
-    input.value = '';
-}
-// 채팅 화면에 렌더링
-function appendBubble(mid, senderId, text) {
-    const div = document.createElement('div');
-    // senderId 가 내 ID 면 .my-message, 아니면 .other-message
-    div.className = senderId === youCache.id ? 'my-message' : 'other-message';
-    div.innerText = text;
-    mid.appendChild(div);
-    mid.scrollTop = mid.scrollHeight;
-}
-
-
 
     // 돌을 놓는 메시지 처리 처리용 js인 drawStone(data.x, data.y, data.userId); 구현 필요
     // 마우스 클릭하여 돌 두기
@@ -321,3 +269,58 @@ function appendBubble(mid, senderId, text) {
             Modal.hideModal();
         }, 2000);
     }
+
+    // 채팅 입력 이벤트 바인딩
+    Chat.btn.addEventListener('click', () => sendMsg(socket, Chat.input));
+    Chat.input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') sendMsg(socket, Chat.input);
+    });
+}
+
+// 1) 채팅 히스토리 렌더링
+function loadMsg(mid) {
+    const myIds = cache.youCache.id;
+    mid.innerHTML = '';
+    const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+    history.forEach(({ senderId, text }) => {
+        const div = document.createElement('div');
+        div.className = senderId === (cache.youCache.id) ? 'my-message' : 'other-message';
+        div.innerText = text;
+        mid.appendChild(div);
+    });
+    mid.scrollTop = mid.scrollHeight;
+}
+
+// 2) 채팅 저장
+function saveMsg(senderId, text) {
+    const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+    history.push({ senderId, text });
+    sessionStorage.setItem('chatHistory', JSON.stringify(history));
+}
+
+// 3)  서버에 채팅 전송
+function sendMsg(socket, input) {
+    const text = input.value.trim();
+    if (!text) return;
+    const payload = {
+        type : 'chat',
+        senderId : cache.youCache.id || '',
+        message : text
+    };
+    socket.send(JSON.stringify(payload));
+    console.log(payload);
+    input.value = '';
+}
+// 채팅 화면에 렌더링
+function appendBubble(mid, senderId, text) {
+    const div = document.createElement('div');
+    // senderId 가 내 ID 면 .my-message, 아니면 .other-message
+    div.className = (senderId === cache.youCache.id) ? 'my-message' : 'other-message';
+    div.innerText = text;
+    mid.appendChild(div);
+    mid.scrollTop = mid.scrollHeight;
+}
+
+
+
+

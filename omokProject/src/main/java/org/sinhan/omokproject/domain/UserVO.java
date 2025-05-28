@@ -20,7 +20,13 @@ public class UserVO {
     private int image;
 
     //stat 테이블에서 온 값들
-    private int win;
-    private int lose;
-    private int rate; //승률계산 필요
+    // 회원 가입시 기본값은 0이다.
+    @Builder.Default
+    private int win = 0;
+
+    @Builder.Default
+    private int lose = 0;
+
+    @Builder.Default
+    private int rate = 0;
 }

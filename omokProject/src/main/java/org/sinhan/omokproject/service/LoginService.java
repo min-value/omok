@@ -26,8 +26,11 @@ public enum LoginService {
 
     //회원가입을 위함
     public int signUp(UserVO vo){
-        return dao.insertUser(vo);
+        try {
+            return dao.insertUser(vo);
+        } catch (Exception e) {
+            //여기서 받아서 exception 처리하기
+            throw new RuntimeException("회원가입 처리 중 오류 발생", e);  // 또는 custom 예외로 감싸기
+        }
     }
-
-
 }

@@ -16,11 +16,17 @@
 <head>
     <meta charset="UTF-8">
     <title>home</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/home/home_style.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/home/home_style.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/music/css/bgm-button-style.css" type="text/css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/view/home/home_script.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/music/js/bgm-control.js"></script>
+    <script src="${pageContext.request.contextPath}/music/js/sound-effect-control.js"></script>
 </head>
 <body>
+<button id="music-btn" class="music-off"></button>
+<audio id="bgm" src="${pageContext.request.contextPath}/music/bgm.mp3" loop></audio>
+<audio id="click-sound" src="${pageContext.request.contextPath}/music/bubble-click-sound.mp3" preload="auto"></audio>
 <div id="logout_btn">
     <form id="logoutForm" action="/logout" method="POST">
         <button type="submit" style="background:none; border:none; padding:0; cursor:pointer;">
@@ -87,9 +93,8 @@
                 </div>
             </div>
         </div>
-        <div id="button_section">
-            <button id="start_btn" class="img-button">
-            </button>
+        <div id="button_section" class="sound-button">
+            <button id="start_btn"></button>
         </div>
     </div>
 </div>

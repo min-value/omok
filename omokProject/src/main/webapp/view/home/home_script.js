@@ -2,8 +2,16 @@ const pencilSrc = `/img/pencil_icon.png`;
 const checkSrc = `/img/check_icon.png`;
 let editing = false; //bio 수정 상태 flag
 
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        console.log('뒤로가기로 접근됨 - 리로드');
+        window.location.reload();
+    }
+});
+
 $(window).ready(function(){
-    console.log('hello');
+
+
     let normalImgUrl = "/img/profile/" + imageNum + ".png";
     let sadImgUrl = "/img/profile/" + imageNum + "_sad.png";
 

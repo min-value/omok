@@ -3,13 +3,12 @@
 
 // 1) 채팅 히스토리 렌더링
 function loadMsg(mid) {
-    const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
-    if (!myIds.length) return;
+    const myIds = youCache.id;
     mid.innerHTML = '';
     const history = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
     history.forEach(({ senderId, text }) => {
         const div = document.createElement('div');
-        div.className = myIds.includes(senderId) ? 'my-message' : 'other-message';
+        div.className = senderId === youCache.id ? 'my-message' : 'other-message';
         div.innerText = text;
         mid.appendChild(div);
     });
@@ -27,7 +26,6 @@ function saveMsg(senderId, text) {
 function sendMsg(socket, input) {
     const text = input.value.trim();
     if (!text) return;
-    const myIds = JSON.parse(sessionStorage.getItem('myServerIds') || '[]');
     const payload = {
         type : 'chat',
         senderId : youCache.id || '',
@@ -67,6 +65,7 @@ function openWebSocket(gameId) {
 
         } else if (data.status === 'MATCHED') {
             handleMatchedStatus(data);
+            loadMsg(mid);
             youCache = data.you;
             opponentCache = data.opponent;
         } else if (data.type === 'chat') {

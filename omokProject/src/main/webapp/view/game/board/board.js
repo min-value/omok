@@ -1,20 +1,21 @@
-const boardSize = 15;
-const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0));
-let currentTurn = 1;
+//오목 돌 배치
+export const boardSize = 15;
+export const board = Array.from({ length: boardSize }, () => Array(boardSize).fill(0));
+export let currentTurn = 1;
 
-const boardElement = document.getElementById("board");
-const boardImage = document.getElementById("board-image");
+export const boardElement = document.getElementById("board");
+export const boardImage = document.getElementById("board-image");
 
-const borderRatio = 65 / 768;
-const offsetX = -4;
-const offsetY = -2;
+export const borderRatio = 65 / 768;
+export const offsetX = -4;
+export const offsetY = -2;
 
-let gridStartX, gridStartY, cellSizeX, cellSizeY;
+export let gridStartX, gridStartY, cellSizeX, cellSizeY;
 
-let hoverStone = null;
+export let hoverStone = null;
 
 // 보드 크기 및 셀 크기
-function calculateGridMetrics() {
+export function calculateGridMetrics() {
     const rect = boardImage.getBoundingClientRect();
     const boardWidth = rect.width;
     const boardHeight = rect.height;
@@ -29,7 +30,7 @@ function calculateGridMetrics() {
     cellSizeY = gridSizeY / (boardSize - 1);
 }
 
-function getCellFromMousePosition(x, y) {
+export function getCellFromMousePosition(x, y) {
     // 보드 범위 체크
     if (
         x < gridStartX || x > gridStartX + cellSizeX * (boardSize - 1) ||
@@ -76,16 +77,12 @@ window.addEventListener('resize', () => {
     }
 });
 
-// hover
-function createHoverStone() {
-    hoverStone = document.createElement("div");
-    hoverStone.className = "stone hover";
-    boardElement.appendChild(hoverStone);
-}
-
 boardElement.addEventListener("mousemove", (e) => {
     if (!hoverStone) createHoverStone();
-
+    if (myRole !== currentTurn) {
+        if (hoverStone) hoverStone.style.display = 'none';
+        return;
+    }
     const rect = boardImage.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -123,8 +120,19 @@ boardElement.addEventListener("click", (e) => {
     placeStone(cell.row, cell.col);
 });
 
+// hover
+export function createHoverStone() {
+    hoverStone = document.createElement("div");
+    hoverStone.className = "stone hover";
+    boardElement.appendChild(hoverStone);
+}
+
 function placeStone(row, col) {
     if (board[row][col] !== 0) return;
+    let myRole;
+    if (myRole !== currentTurn || myRole === 0) {
+        return;
+    }
 
     board[row][col] = currentTurn;
     renderStone(row, col);
@@ -142,7 +150,7 @@ function placeStone(row, col) {
     currentTurn = currentTurn === 1 ? 2 : 1;
 }
 
-function renderStone(row, col, color = board[row][col]) {
+export function renderStone(row, col, color = board[row][col]) {
     const stone = document.createElement("div");
     stone.className = "stone " + (color === 1 ? "black" : "white");
 
@@ -155,7 +163,7 @@ function renderStone(row, col, color = board[row][col]) {
     boardElement.appendChild(stone);
 }
 
-function rerenderStones() {
+export function rerenderStones() {
     // 기존 돌 제거 (hover 제외)
     document.querySelectorAll(".stone:not(.hover)").forEach(el => el.remove());
 
@@ -169,7 +177,7 @@ function rerenderStones() {
     }
 }
 
-function checkWin(row, col, color) {
+export function checkWin(row, col, color) {
     const directions = [
         [0, 1],
         [1, 0],
@@ -191,7 +199,7 @@ function checkWin(row, col, color) {
     return false;
 }
 
-function countStones(row, col, dy, dx, color) {
+export function countStones(row, col, dy, dx, color) {
     let count = 0;
     let r = row + dy;
     let c = col + dx;
@@ -205,7 +213,7 @@ function countStones(row, col, dy, dx, color) {
     return count;
 }
 
-function saveBoardToSession() {
+export function saveBoardToSession() {
     sessionStorage.setItem('board', JSON.stringify(board));
     sessionStorage.setItem('turn', currentTurn);
 }

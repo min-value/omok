@@ -79,26 +79,57 @@ public enum LoginDAO {
     }
 
     //회원가입을 위한 insert 필요
-    public int insertUser(UserVO vo){
-        String sql = "INSERT INTO USER(user_id,user_password,bio,image) VALUES(?,?,?,?)";
+    public int insertUser(UserVO vo) throws Exception{
+        String user_sql = "INSERT INTO USER(user_id,user_password,bio,image) VALUES(?,?,?,?)";
+        String stat_sql = "INSERT INTO STAT(user_id,win,lose,rate) VALUES(?,?,?,?)";
+
         int cnt = 0;
-
+        Connection conn = null;
+        PreparedStatement user_pstmt = null;
+        PreparedStatement stat_pstmt = null;
         try{
-            @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
-            @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+            conn = ConnectionUtil.INSTANCE.getConnection();
+            conn.setAutoCommit(false); // 수동 트랜잭션 시작
 
-            pstmt.setString(1, vo.getUserId());
-            pstmt.setString(2, vo.getUserPW());
-            pstmt.setString(3, vo.getBio());
-            pstmt.setInt(4, vo.getImage());
+            //User 정보 업데이트
+            user_pstmt = conn.prepareStatement(user_sql);
 
-            cnt = pstmt.executeUpdate();
+            user_pstmt.setString(1, vo.getUserId());
+            user_pstmt.setString(2, vo.getUserPW());
+            user_pstmt.setString(3, vo.getBio());
+            user_pstmt.setInt(4, vo.getImage());
+
+            cnt += user_pstmt.executeUpdate();
+
+            //Stat update
+            stat_pstmt = conn.prepareStatement(stat_sql);
+
+            stat_pstmt.setString(1, vo.getUserId());
+            stat_pstmt.setInt(2, vo.getWin());
+            stat_pstmt.setInt(3, vo.getLose());
+            stat_pstmt.setInt(4, vo.getRate());
+
+            cnt += stat_pstmt.executeUpdate(); //업데이트가 총 두번 되었는지 확인하기 위함이다.
+            conn.commit(); //다 완료 된 다음에 커밋
         } catch (Exception e){
-            log.error("에러 발생 : {}", e.getMessage());
-            e.printStackTrace();
+            if(conn != null){ //에러 났는데 null이 아닌 경우 롤백
+                conn.rollback();
+            }
+            throw new RuntimeException("회원가입 중 오류 발생", e);
+        } finally {
+            //여기서 수동으로 close 해준다.
+            if(user_pstmt != null){
+                user_pstmt.close();
+            }
+            if(stat_pstmt != null){
+                stat_pstmt.close();
+            }
+            if(conn != null){
+                //히카리cp를 사용중이므로, 다시 오토 커밋 키고 돌려준다.
+                conn.setAutoCommit(true);
+                conn.close();
+            }
         }
-
-        return cnt; //1이면 업데이트 완료
+        return cnt; //2면 업데이트 완료
     }
-
 }

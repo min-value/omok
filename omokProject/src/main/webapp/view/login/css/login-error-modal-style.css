@@ -19,6 +19,7 @@
     align-items: center;
     box-sizing: border-box;
     background: rgba(0, 0, 0, 0.5); /* 모달 뜨고 뒷 배경 약간 어둡게 */
+    z-index: 9999; /* 맨 위로 올라오게 하기 위함이다. */
 }
 
 /* modal 전체 영역 감싸는 틀 */
@@ -26,6 +27,7 @@
     position: relative;
     width: clamp(250px, 60vw, 450px);
     height: auto;
+    z-index: 10000; /* modal이 맨 위로 올라오게 하기 위함이다. */
 }
 
 /* modal 이미지 영역 */

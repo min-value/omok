@@ -50,7 +50,7 @@
     align-self: flex-end;
     position: relative;
     font-size: 15px;
-    text-align: center;
+    text-align: left;
     word-break: break-all;
 }
 /*말풍선 모양 만들기*/
@@ -76,7 +76,7 @@
     align-self: flex-start;
     position: relative;
     font-size: 15px;
-    text-align: center;
+    text-align: left;
     word-break: break-all;
 }
 /*상대방 말풍선 모양 만들기*/

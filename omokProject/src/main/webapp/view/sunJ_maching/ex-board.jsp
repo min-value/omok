@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/board/board.css"/>
     <%--매칭 모달 스타일 추가--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/modal/match/matchmodal.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/chat/chatwindow/chatstyle.css"/>
 </head>
 <body>
 
@@ -56,7 +57,14 @@
             profile
         </div>
         <div class="chat">
-            chat
+            <div class="chat-box">
+                <div class="chat-top">채팅방</div>
+                <div class="chat-mid"></div>
+                <div class="chat-bottom">
+                    <input type="text" class="chat-input" placeholder="메시지를 입력해 주세요">
+                    <button class="send-btn">전송</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

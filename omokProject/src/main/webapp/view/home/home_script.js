@@ -124,6 +124,14 @@ function setBar(winRate) {
     $('.bar.lose')
         .css('width', (100 - winRate) + '%')
         .text((100 - winRate) + '%');
+
+    if(winRate === 100) {
+        $('.bar.lose')
+            .text('');
+    } else if(winRate === 0) {
+        $('.bar.win')
+            .text('');
+    }
 }
 
 /* 마이 랭킹 업데이트 함수 */

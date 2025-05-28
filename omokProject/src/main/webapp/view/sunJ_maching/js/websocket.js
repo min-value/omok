@@ -103,6 +103,8 @@ export function openWebSocket(gameId) {
             alert("이미 돌이 놓여있는 자리입니다.");
             return;
         }
+        const stoneSound = new Audio("../../../music/stonesound.mp3");
+        stoneSound.play();
 
         const message = {
             type: "move",

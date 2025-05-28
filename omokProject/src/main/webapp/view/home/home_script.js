@@ -28,7 +28,7 @@ $(window).ready(function(){
     });
 
     /* 로그아웃 버튼 호버 리스너*/
-    $('#logout-btn img').hover(
+    $('#logout_btn img').hover(
         function() {
             $('#avatar')
                 .css('background-image', 'url(' + sadImgUrl + ')');
@@ -124,6 +124,14 @@ function setBar(winRate) {
     $('.bar.lose')
         .css('width', (100 - winRate) + '%')
         .text((100 - winRate) + '%');
+
+    if(winRate === 100) {
+        $('.bar.lose')
+            .text('');
+    } else if(winRate === 0) {
+        $('.bar.win')
+            .text('');
+    }
 }
 
 /* 마이 랭킹 업데이트 함수 */

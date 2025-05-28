@@ -25,7 +25,7 @@ body, html{
     margin: 20px
 }
 
-#modal{
+#resultModal{
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     height: 100vh;
@@ -35,7 +35,7 @@ body, html{
     align-items: center;
 }
 
-#board {
+#resultBoard {
     width: 50vw;
     aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
     background: url("/img/modal_background.png") no-repeat center center;

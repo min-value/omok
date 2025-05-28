@@ -19,7 +19,7 @@ export function renderPlayer(role, info) {
 }
 //돌 색상 정하는 용도
 export function setStones(youId, player1Id) {
-    const isYouPlayer1 = youId === player1Id;
+    const isYouPlayer1 = youId === player1Id;q
 
     const blackStone = document.querySelector(".stone-image-black");
     const whiteStone = document.querySelector(".stone-image-white");

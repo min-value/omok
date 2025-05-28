@@ -10,12 +10,13 @@ import * as Modal from "../js/match/modal-ui.js";
 // 접속자, 상대방 정보 저장용 전역변수
 let youCache = null;
 let opponentCache = null;
+export let socket = null;
 
 export let currentTurn = 1;  // 1=흑돌(선공), 2=백돌(후공)
 export let myRole = 0;// 0=미할당, 1=흑, 2=백
 
 export function openWebSocket(gameId) {
-    const socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
+    socket = new WebSocket(`ws://localhost:8080/min-value?gameId=${gameId}`);
 
     //확인용 로그
     socket.onopen = () => console.log("✅ WebSocket 연결됨");
@@ -231,9 +232,57 @@ export function openWebSocket(gameId) {
             alert(resultMessage);
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
-            location.reload();
+            // location.reload();
+            const gameId = getGameIdFromURL();
+            showResultModal(gameId);
         }, 100);
     }
+    
+    // 게임 결과 모달 띄우기
+    function showResultModal(gameId) {
+        fetch(`/view/modal/result/result.jsp?gameId=` + gameId)
+            .then(response => response.text())
+            .then(html => {
+                // 임시로 div 생성해서 응답 HTML을 담음
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                // #modal 요소만 추출
+                const modal = tempDiv.querySelector('#modal');
+
+                if (modal) {
+                    // 기존에 이미 모달이 있으면 삭제
+                    const oldModal = document.querySelector('#modal');
+                    if (oldModal) oldModal.remove();
+
+                    // 모달을 body에 추가
+                    document.body.appendChild(modal);
+
+                    // 모달 보여주기
+                    modal.style.display = 'flex';
+
+                    // 다시 버튼 이벤트 등록
+                    modal.querySelector('#go_main_btn').addEventListener("click", () => {
+                        socket.close(); // 소켓끊기
+                        location.href = "/omok/main";
+                    });
+
+                    modal.querySelector('#re_btn').addEventListener("click", () => {
+                        modal.style.display = "none";
+                        // 다시 시작 기능이 있다면 이곳에서 로직 작성
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("결과 모달 불러오기 실패", error);
+            });
+    }
+    // 게임 아이디 받기
+    function getGameIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('gameId');
+    }
+
 
     /* -------여기 아래 두개는 매칭용으로 개발 완료된 것임. 건들면 안된다!!!------- */
     function handleWaitingStatus(data) {

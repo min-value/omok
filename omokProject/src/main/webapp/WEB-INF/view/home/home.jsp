@@ -22,6 +22,7 @@
     <script src="${pageContext.request.contextPath}/view/home/home_script.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/music/js/bgm-control.js"></script>
     <script src="${pageContext.request.contextPath}/music/js/sound-effect-control.js"></script>
+    <script src = "${pageContext.request.contextPath}/view/sunJ_maching/js/main/click-start-button.js"></script>
 </head>
 <body>
 <button id="music-btn" class="music-off"></button>

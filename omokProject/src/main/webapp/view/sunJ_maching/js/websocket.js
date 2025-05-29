@@ -40,11 +40,28 @@ export function openWebSocket(gameId) {
             // 이건 매칭에 쓰임. 상대방이 아직 없는 상태
             handleWaitingStatus(data);
         } else if (data.status === "MATCHED") {
-            cache.youCache = data.you;
 
+            // 내가 보낸 userId 기준으로 나와 youJson 비교 한 번 해줘야 한다.
+            const myId = cache.youCache.id; //매칭시 저장된 내 현재 세션 아이디
+            const isYou = (data.you.id === myId);
 
-            console.log(cache.youCache);
-            cache.opponentCache = data.opponent;
+            if (isYou) { //내가 you가 맞을 경우
+                cache.youCache = data.you;
+                cache.opponentCache = data.opponent;
+
+                //혹시 data를 쓰는게 있을수도 있으니 교체
+                data.you = cache.youCache;
+                data.opponent = cache.opponentCache;
+            } else {
+                // 서버가 반대로 줬을 수도 있으니까 교체
+                cache.youCache = data.opponent;
+                cache.opponentCache = data.you;
+
+                //혹시 data를 쓰는게 있을수도 있으니 교체
+                data.you = cache.youCache;
+                data.opponent = cache.opponentCache;
+            }
+
             myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
             currentTurn = 1;
             updateTurnIndicator(currentTurn === myRole);

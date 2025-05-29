@@ -42,8 +42,8 @@ export function openWebSocket(gameId) {
             cache.opponentCache = data.opponent;
             myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
             currentTurn = 1;
-
             updateTurnIndicator(currentTurn === myRole);
+            loadMsg(Chat.mid);
             // 이건 매칭에 쓰임. 상대방이 들어와서 matched 된 상태
             handleMatchedStatus(data);
             loadMsg(Chat.mid);
@@ -227,6 +227,7 @@ export function openWebSocket(gameId) {
 
         setTimeout(() => {
             alert(resultMessage);
+            removeChat()
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
             location.reload();
@@ -322,6 +323,11 @@ function appendBubble(mid, senderId, text) {
     div.innerText = text;
     mid.appendChild(div);
     mid.scrollTop = mid.scrollHeight;
+}
+// 채팅 삭제
+function removeChat() {
+    sessionStorage.removeItem('chatHistory');
+    Chat.mid.innerHTML = "";
 }
 
 

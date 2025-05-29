@@ -5,6 +5,55 @@
     font-style: normal;
 }
 
+@keyframes jittery {
+    5%,
+    50% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(0.9);
+    }
+
+    15% {
+        transform: scale(1.15);
+    }
+
+    20% {
+        transform: scale(1.15) rotate(-5deg);
+    }
+
+    25% {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    30% {
+        transform: scale(1.15) rotate(-3deg);
+    }
+
+    35% {
+        transform: scale(1.15) rotate(2deg);
+    }
+
+    40% {
+        transform: scale(1.15) rotate(0);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 body, html {
     height: 100%;
     margin: 0;
@@ -79,6 +128,7 @@ body, html {
     background-size: contain;
     margin-top: 5vh;
     aspect-ratio: 6 / 1;
+    animation: jittery 2s;
 }
 
 @media (max-width: 950px) {
@@ -101,7 +151,7 @@ body, html {
     width: 90%;
     box-sizing: border-box;
     margin-top: 5vh;
-    gap: 4vw;
+    gap: 3vw;
 }
 
 @media (max-width: 950px) {
@@ -121,6 +171,7 @@ body, html {
     overflow: visible;
     width: 30%;
     min-width: 120px;
+    min-height: 200px;
     flex-shrink: 0;
 }
 
@@ -144,6 +195,18 @@ body, html {
     border-radius: 10px;
     z-index: 1;
 }
+
+.card-bg2 {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-color: #563a1c;
+    border-radius: 10px;
+    z-index: 1;
+}
+
 
 .profile-image1,
 .profile-image2 {
@@ -201,9 +264,43 @@ body, html {
 }
 
 .vs-text {
-    font-size: clamp(48px, 4vw, 64px);
+    flex: 0 0 auto; /* 너비 고정 */
+    align-self: center;
+    font-size: clamp(48px, 4vw, 70px);
     font-weight: bold;
     color: black;
     min-width: 60px;
+    text-align: center;
+}
+
+.loading-icon {
+    width: 30vw;
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 24px;
+    animation: rotateStep 6s steps(12) infinite;
+    transform-origin: center;
+}
+
+@keyframes rotateStep {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.player-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: none;
+}
+
+.hidden {
+    display: none !important;
 }
 

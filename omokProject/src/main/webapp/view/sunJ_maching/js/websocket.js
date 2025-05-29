@@ -12,6 +12,7 @@ let youCache = null;
 let opponentCache = null;
 import { cache } from "./match/match-init.js";
 import * as Chat from "../../game/chat/chatwindow/chatscript.js";
+import { showPlayer2Info } from "./match/match-init.js";
 
 // // 접속자, 상대방 정보 저장용 전역변수
 // let youCache = null;
@@ -46,8 +47,8 @@ export function openWebSocket(gameId) {
             cache.opponentCache = data.opponent;
             myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
             currentTurn = 1;
-
             updateTurnIndicator(currentTurn === myRole);
+            loadMsg(Chat.mid);
             // 이건 매칭에 쓰임. 상대방이 들어와서 matched 된 상태
             handleMatchedStatus(data);
             loadMsg(Chat.mid);
@@ -230,6 +231,7 @@ export function openWebSocket(gameId) {
 
         // setTimeout(() => {
             alert(resultMessage);
+            removeChat()
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
             // location.reload();
@@ -362,8 +364,8 @@ export function openWebSocket(gameId) {
     /* -------여기 아래 두개는 매칭용으로 개발 완료된 것임. 건들면 안된다!!!------- */
     function handleWaitingStatus(data) {
         Modal.renderPlayer("you", cache.youCache);
-        document.querySelector(".vs-text").style.display = "none";
-        document.getElementById("player2-wrapper").style.display = "none";
+        // document.querySelector(".vs-text").style.display = "none";
+        // document.getElementById("player2-wrapper").style.display = "none";
 
         // ✅ youCache에서 내 정보 가져와서 돌 배치
         Modal.setStones(cache.youCache.id, cache.youCache.id); // player1 === you
@@ -378,6 +380,8 @@ export function openWebSocket(gameId) {
         //로그 찍어서 확인
         console.log("내정보:", data.you);
         console.log("상대방과 매칭되었습니다:", data.opponent);
+
+        showPlayer2Info();  // UI 업데이트 함수 호출
 
         /*
         ✅ WebSocket 연결됨
@@ -394,7 +398,7 @@ export function openWebSocket(gameId) {
 
         setTimeout(() => {
             Modal.hideModal();
-        }, 2000);
+        }, 4000);
     }
 
     // 채팅 입력 이벤트 바인딩
@@ -446,6 +450,11 @@ function appendBubble(mid, senderId, text) {
     div.innerText = text;
     mid.appendChild(div);
     mid.scrollTop = mid.scrollHeight;
+}
+// 채팅 삭제
+function removeChat() {
+    sessionStorage.removeItem('chatHistory');
+    Chat.mid.innerHTML = "";
 }
 
 

@@ -92,11 +92,13 @@
 }
 .chat-bottom {
     display: flex;
+    gap: 8px;
     padding: 12px;
     background: #fff;
 }
 .chat-input {
     flex: 1;
+    min-width: 0;
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -113,6 +115,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 .send-btn:hover {
     background: #333;

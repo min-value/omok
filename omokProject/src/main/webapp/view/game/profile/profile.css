@@ -21,11 +21,12 @@
 }
 
 .profile-player {
+    flex: 1 1 45%;
     position: relative;
     overflow: visible;
-    width: 30%;
+    /*width: 30%;*/
+    width: calc(50% - 10px);
     min-width: 120px;
-    flex-shrink: 0;
 }
 
 .profile-player-card {

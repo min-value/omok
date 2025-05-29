@@ -60,7 +60,7 @@ body, html {
     padding: 0;
     overflow: hidden;
     background-size: cover;
-    background: url('../../../img/background2.png') no-repeat fixed top center;
+    /*background: url('../../../img/background2.png') no-repeat fixed top center;*/
     display: flex;
     justify-content: center;
     font-family: 'DungGeunMo', sans-serif;
@@ -104,10 +104,9 @@ body, html {
 }
 
 .modal-content {
-    width: 90vw;
+    /*width: 90vw;*/
+    width: clamp(600px, 80%, 700px);
     height: auto;
-    min-width: 600px;
-    max-width: 900px;
     background: url('../../../img/modal_background.png') no-repeat center center;
     background-size: contain;
     padding: 4vh 4vw;
@@ -126,7 +125,7 @@ body, html {
     height: 25%;
     background: url('../../../img/match_text.png') no-repeat center center;
     background-size: contain;
-    margin-top: 5vh;
+    margin-top: 4vh;
     aspect-ratio: 6 / 1;
     animation: jittery 2s;
 }
@@ -148,9 +147,9 @@ body, html {
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
-    width: 90%;
+    width: 80%;
     box-sizing: border-box;
-    margin-top: 5vh;
+    margin-top: 4vh;
     gap: 3vw;
 }
 
@@ -165,6 +164,12 @@ body, html {
         margin-top: 2vh;
     }
 }
+
+/*#player2-wrapper {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
 
 .player {
     position: relative;
@@ -252,7 +257,7 @@ body, html {
     /*max-width: 80px;*/
     height: auto;
     z-index: 3;
-    bottom: -5%;
+    bottom: -3%;
     transform: translateY(-50%);
 }
 
@@ -275,10 +280,10 @@ body, html {
 }
 
 .loading-icon {
-    width: 30vw;
-    max-width: 200px;
+    display: block;
+    width: 80%;
+    max-width: 120px;
     height: auto;
-    margin-bottom: 24px;
     animation: rotateStep 6s steps(12) infinite;
     transform-origin: center;
 }

@@ -2,8 +2,14 @@ const pencilSrc = `/img/pencil_icon.png`;
 const checkSrc = `/img/check_icon.png`;
 let editing = false; //bio 수정 상태 flag
 
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        console.log('뒤로가기로 접근됨 - 리로드');
+        window.location.reload();
+    }
+});
+
 $(window).ready(function(){
-    console.log('hello');
     let normalImgUrl = "/img/profile/" + imageNum + ".png";
     let sadImgUrl = "/img/profile/" + imageNum + "_sad.png";
 
@@ -11,7 +17,7 @@ $(window).ready(function(){
     $('#edit_icon').on('click', function() {
         updateBio(this); // 클릭한 DOM 요소를 인자로 전달
     });
-    
+
     /* 한줄 소개 박스 포커스 리스너*/
     $('textarea.bio_text').on({
         focus: function () {
@@ -49,7 +55,7 @@ $(window).ready(function(){
 
     /* 내 랭킹 업데이트 */
     setMyRank(myRank, normalImgUrl, userId, winRate);
-    
+
     /* 내 프로필 업데이트 */
     setProfile(userId, userBio, winNum, loseNum, imageNum);
 
@@ -148,7 +154,7 @@ function setMyRank(rank, imgUrl, userId, winRate) {
             <div class="rank_user_id">${userId}</div>
             <div class="rank_user_rate">
                 <img src="../../img/win_icon.png" class="win_icon" alt="승리아이콘">
-                <span class="win_rate">${winRate}</span>
+                <span class="win_rate">${winRate}%</span>
             </div>`;
 
     $myRank.html(myRankHtml);

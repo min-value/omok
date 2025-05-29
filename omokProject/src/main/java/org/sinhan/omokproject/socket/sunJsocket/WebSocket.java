@@ -12,6 +12,7 @@ import org.sinhan.omokproject.util.JsonBuilderUtil;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,13 +28,18 @@ public class WebSocket {
     // 세션 → gameId
     private static final Map<Session, Integer> sessionRoomMap = new ConcurrentHashMap<>();
 
+    private Session session;
+    private int gameId;
+    private String userId;
+
     // 소켓의 onOpen은 클라이언트가 연결될때 호출되는 것으로, 이 부분은 무조건 매칭만 사용한다.
     @OnOpen
     public void onOpen(Session session) throws IOException {
         // 쿼리 스트링에서 gameId 파싱 (예: ?gameId=3)
-        String query = session.getQueryString(); // gameId=3
-        int gameId = Integer.parseInt(query.split("=")[1]);
+        this.session = session;
 
+        String query = session.getQueryString();
+        this.gameId = Integer.parseInt(query.split("=")[1]);
         // 방에 세션 추가
         gameRoomMap.computeIfAbsent(gameId, k -> ConcurrentHashMap.newKeySet()).add(session);
         sessionRoomMap.put(session, gameId);
@@ -74,6 +80,9 @@ public class WebSocket {
             //오목돌 이동을 어떻게 처리할지를 고민한다.
             case "move":
                 handleMoveMessage(receivedJson, sessions);
+                break;
+            case "gameover":
+                handleGameoverMessage(receivedJson, sessions);
                 break;
             default:
                 log.warn("알 수 없는 type 수신됨: {}", type);
@@ -149,13 +158,28 @@ public class WebSocket {
     private void handleMoveMessage(JsonObject receivedJson, Set<Session> sessions) throws IOException {
         int x = receivedJson.get("x").getAsInt();
         int y = receivedJson.get("y").getAsInt();
-        String userId = receivedJson.get("userId").getAsString();
-
+        String userId = receivedJson.get("userId").getAsString();// 오목 돌 놓기 정보 브로드캐스트
         JsonObject response = new JsonObject();
         response.addProperty("type", "move");
         response.addProperty("x", x);
         response.addProperty("y", y);
         response.addProperty("userId", userId);
+
+        synchronized (sessions) {
+            for (Session s : sessions) {
+                if (s.isOpen()) s.getBasicRemote().sendText(response.toString());
+            }
+        }
+    }
+
+
+
+    private void handleGameoverMessage(JsonObject receivedJson, Set<Session> sessions) throws IOException {
+        String userId = receivedJson.get("userId").getAsString();
+
+        JsonObject response = new JsonObject();
+        response.addProperty("type", "gameover");
+        response.addProperty("winnerId", userId);
 
         for (Session s : sessions) {
             if (s.isOpen()) s.getBasicRemote().sendText(response.toString());
@@ -183,4 +207,3 @@ public class WebSocket {
         throwable.printStackTrace();
     }
 }
-

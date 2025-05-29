@@ -39,10 +39,10 @@ $(window).ready(function(){
         }
     );
 
-    /* 시작 버튼 리스너 */
-    $('#start_btn').on('click', function() {
-        location.assign("/omok/game");
-    })
+    // /* 시작 버튼 리스너 */
+    // $('#start_btn').on('click', function() {
+    //     location.assign("/omok/game");
+    // })
 
     /* 랭킹(1-10위) 업데이트 */
     setRankingList(ranks);

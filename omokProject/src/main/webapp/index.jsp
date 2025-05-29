@@ -10,4 +10,9 @@
 <br/>
 <a href="hello-servlet">Hello dddd Servlet</a>
 </body>
+<script>
+    setTimeout(() => {
+        window.location.href = "/login";
+    }, 1000); // 1초 딜레이
+</script>
 </html>

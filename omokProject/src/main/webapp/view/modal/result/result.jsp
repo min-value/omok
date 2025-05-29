@@ -4,6 +4,7 @@
 <%@ page import ="org.sinhan.omokproject.domain.GameVO"%>
 <%@ page import="org.sinhan.omokproject.repository.sunJMatchingDAO.GameDAO" %>
 <%
+
     // 로그인 유저 정보
     UserVO loginUser = (UserVO) session.getAttribute("loginInfo");
     String userId = loginUser != null? loginUser.getUserId() : "unknown";

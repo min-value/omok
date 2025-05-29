@@ -7,7 +7,6 @@ const myUserId = JSON.parse(sessionStorage.getItem('myServerIds') || '[]')[0] ||
 export const mid     = document.querySelector('.chat-mid');
 export const btn   = document.querySelector('.send-btn');
 export const input = document.querySelector('.chat-input');
-
 // // 2) 메시지 내역 렌더링 (초기 로드)
 // function loadMsg() {
 //     const mid     = document.querySelector('.chat-mid');

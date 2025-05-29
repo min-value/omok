@@ -7,6 +7,9 @@ ajax에서 부르기 위해 함수로 구성
  */
 import * as Omok from "../../game/board/board.js";
 import * as Modal from "../js/match/modal-ui.js";
+// 접속자, 상대방 정보 저장용 전역변수
+let youCache = null;
+let opponentCache = null;
 import { cache } from "./match/match-init.js";
 import * as Chat from "../../game/chat/chatwindow/chatscript.js";
 import { showPlayer2Info } from "./match/match-init.js";
@@ -37,9 +40,28 @@ export function openWebSocket(gameId) {
             // 이건 매칭에 쓰임. 상대방이 아직 없는 상태
             handleWaitingStatus(data);
         } else if (data.status === "MATCHED") {
-            cache.youCache = data.you;
-            console.log(cache.youCache);
-            cache.opponentCache = data.opponent;
+
+            // 내가 보낸 userId 기준으로 나와 youJson 비교 한 번 해줘야 한다.
+            const myId = cache.youCache.id; //매칭시 저장된 내 현재 세션 아이디
+            const isYou = (data.you.id === myId);
+
+            if (isYou) { //내가 you가 맞을 경우
+                cache.youCache = data.you;
+                cache.opponentCache = data.opponent;
+
+                //혹시 data를 쓰는게 있을수도 있으니 교체
+                data.you = cache.youCache;
+                data.opponent = cache.opponentCache;
+            } else {
+                // 서버가 반대로 줬을 수도 있으니까 교체
+                cache.youCache = data.opponent;
+                cache.opponentCache = data.you;
+
+                //혹시 data를 쓰는게 있을수도 있으니 교체
+                data.you = cache.youCache;
+                data.opponent = cache.opponentCache;
+            }
+
             myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
             currentTurn = 1;
             updateTurnIndicator(currentTurn === myRole);
@@ -53,7 +75,6 @@ export function openWebSocket(gameId) {
         } else if (data.type === 'move') {
             drawStone(data);
         } else if (data.type === "gameover") {
-
             gameOver(data);
 
         }
@@ -135,7 +156,7 @@ export function openWebSocket(gameId) {
         if (Omok.checkWin(cell.row, cell.col, currentTurn)) {
             setTimeout(() => {
                 console.log((currentTurn === 1 ? "흑" : "백") + " 승리!");
-                location.reload();
+                // location.reload();
             }, 100);
 
             const message = {
@@ -225,14 +246,137 @@ export function openWebSocket(gameId) {
             ? "🎉 당신이 승리했습니다!"
             : "😢 패배하셨습니다.";
 
-        setTimeout(() => {
+        // setTimeout(() => {
             alert(resultMessage);
             removeChat()
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
-            location.reload();
-        }, 100);
+            // location.reload();
+            const gameId = getGameIdFromURL();
+            showResultModal(gameId, data.winnerId);
+        // }, 100);
     }
+
+    function showResultModal(gameId, winnerId) {
+        const payload = {
+            gameId: gameId,
+            winnerId: winnerId
+        };
+
+        fetch('/isWin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("data : " + JSON.stringify(data));
+                if (data.result === "success") {
+                    // 파생 데이터 계산
+                    const resultImage = data.isWinner ? "/img/win_text.png" : "/img/lose_text.png";
+                    const userImgUrl = `/img/profile/${data.image}.png`;
+                    const total = data.win + data.lose;
+                    const winRate = total > 0 ? Math.round(data.win / total * 100) : 0;
+                    const loseRate = total > 0 ? 100 - winRate : 0;
+
+                    const modalHtml = `
+                <div id="modal" style="position: absolute;
+                        background-color: rgba(0, 0, 0, 0.6);
+                        height: 100vh;
+                        width: 100vw;
+                        display: none;
+                        justify-content: center;
+                        align-items: center;">
+                    <div id="board" style="width: 50vw;
+                            aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
+                            background: url('/img/modal_background.png') no-repeat center center;
+                            background-size: contain;
+                            min-width: 100px;">
+                        <div id="text" style="background: url('${resultImage}') no-repeat center center; background-size: contain; height: 25%; margin-top: 9%;"></div>
+                        <div id="info" style="display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 5%;
+                                padding: 0 17%;
+                                overflow: hidden; /* ← 튀어나오는 거 방지 */">
+                            <div id="user_img" style="flex-basis: 35%; aspect-ratio: 1 / 1; background: url('${userImgUrl}') no-repeat center center; background-size: contain; min-width: 80px;"></div>
+                            <div id="explanation" style="flex: 1;
+                                font-size: clamp(12px, 2vw, 28px);
+                                word-break: keep-all;
+                                min-width: 120px;
+                                align-self: flex-start;
+                                padding: 4% 0;">
+                                <div>아이디: ${data.userId}</div>
+                                <div>${total}전 ${data.win}승 ${data.lose}패</div>
+                                <div id="bar" style="display:flex; height:23px; background-color:#ddd; border-radius:10px; overflow:hidden; margin-top:10px; border:3px solid #333;">
+                                    <div id="win_bar" style="width: ${winRate}%; height: 23px; background-color:#4a68c3; color:#fff; display:flex; align-items:center; justify-content:center; font-size:clamp(8px,1.5vw,13px);">${data.win}</div>
+                                    <div id="lose_bar" style="width: ${loseRate}%; height: 23px; background-color:#f44336; color:#fff; display:flex; align-items:center; justify-content:center; font-size:clamp(8px,1.5vw,13px);">${data.lose}</div>
+                                </div>
+                                <div id="bar_label" style="display:flex; justify-content:space-between; margin-top:4%; font-size:clamp(10px,1.5vw,15px); padding: 0 5px;">
+                                    <div id="win_label">승 (${winRate}%)</div>
+                                    <div id="lose_label">패 (${loseRate}%)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="btn" style="height: 20%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-wrap: wrap;
+                            padding: 0 2%;
+                            gap: 4%;">
+                            <button id="go_main_btn" style="height: 45%;
+                                width: 25%;
+                                background-color: #d9d9d9;
+                                border-radius: 10px;
+                                border-color: #d9d9d9;
+                                font-size: clamp(8px, 1.5vw, 25px);
+                                transition: background-color 0.2s ease, border-color 0.2s ease;">메인 메뉴</button>
+                            <button id="re_btn" style = "height: 45%;
+                                width: 25%;
+                                background-color: #d9d9d9;
+                                border-radius: 10px;
+                                border-color: #d9d9d9;
+                                font-size: clamp(8px, 1.5vw, 25px);
+                                transition: background-color 0.2s ease, border-color 0.2s ease;">다시 시작</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                    // 모달 삽입
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = modalHtml;
+                    document.body.appendChild(tempDiv.firstElementChild);
+
+                    // 버튼 이벤트 등록
+                    const modal = document.querySelector('#modal');
+                    modal.querySelector('#go_main_btn').addEventListener("click", () => {
+                        location.href = "main"; // 메인 이동 시 주석 해제
+                    });
+                    modal.querySelector('#re_btn').addEventListener("click", () => {
+                        modal.style.display = "none";
+                        // 다시 시작 기능 구현
+                    });
+                } else {
+                    console.error("서버 응답 실패:", data);
+                }
+                modal.style.display = "flex";
+            })
+            .catch(error => {
+                console.error("결과 처리 실패", error);
+            });
+    }
+
+
+    // 게임 아이디 받기
+    function getGameIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('gameId');
+    }
+
 
     /* -------여기 아래 두개는 매칭용으로 개발 완료된 것임. 건들면 안된다!!!------- */
     function handleWaitingStatus(data) {

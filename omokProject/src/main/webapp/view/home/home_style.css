@@ -509,8 +509,8 @@ textarea.bio_text {
 
 #start_btn {
     cursor: pointer;
-    height: 70%;
-    width : 20%;
+    height: 60%;
+    aspect-ratio: 1.9 / 1;
     border: none;
     background-color: transparent;
     background-image: url("../../img/start_btn.png");
@@ -518,6 +518,7 @@ textarea.bio_text {
     background-size: contain;
     animation: jittery 4s infinite;
 }
+
 
 /*
 #start_btn:hover {

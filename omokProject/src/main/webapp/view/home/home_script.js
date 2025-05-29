@@ -2,16 +2,8 @@ const pencilSrc = `/img/pencil_icon.png`;
 const checkSrc = `/img/check_icon.png`;
 let editing = false; //bio 수정 상태 flag
 
-window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-        console.log('뒤로가기로 접근됨 - 리로드');
-        window.location.reload();
-    }
-});
-
 $(window).ready(function(){
-
-
+    console.log('hello');
     let normalImgUrl = "/img/profile/" + imageNum + ".png";
     let sadImgUrl = "/img/profile/" + imageNum + "_sad.png";
 
@@ -19,7 +11,7 @@ $(window).ready(function(){
     $('#edit_icon').on('click', function() {
         updateBio(this); // 클릭한 DOM 요소를 인자로 전달
     });
-    
+
     /* 한줄 소개 박스 포커스 리스너*/
     $('textarea.bio_text').on({
         focus: function () {
@@ -47,28 +39,17 @@ $(window).ready(function(){
         }
     );
 
-    $('#start_btn').on('click', function(e) {
-        e.preventDefault(); // 혹시 기본 동작 차단
-        const clickSound = document.getElementById("click-sound");
-        clickSound.currentTime = 0;
-        clickSound.play().then(() => {
-            // 효과음 재생 성공 후 200ms 뒤 페이지 이동
-            setTimeout(() => {
-                location.assign("/omok/game");
-            }, 200);
-        }).catch(err => {
-            console.error("효과음 재생 실패:", err);
-            // 실패해도 바로 이동
-            location.assign("/omok/game");
-        });
-    });
+    /* 시작 버튼 리스너 */
+    $('#start_btn').on('click', function() {
+        location.assign("/omok/game");
+    })
 
     /* 랭킹(1-10위) 업데이트 */
     setRankingList(ranks);
 
     /* 내 랭킹 업데이트 */
     setMyRank(myRank, normalImgUrl, userId, winRate);
-    
+
     /* 내 프로필 업데이트 */
     setProfile(userId, userBio, winNum, loseNum, imageNum);
 

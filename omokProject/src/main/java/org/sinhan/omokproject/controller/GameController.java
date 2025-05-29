@@ -71,7 +71,6 @@ public class GameController extends HttpServlet {
                 game.setStatus(GameVO.GameStatus.FINISHED);
                 game.setWinnerId(user.getUserId());
                 responseJson.addProperty("result", "win");
-                gameDAO.finishGame(game);
             } else {
                 responseJson.addProperty("result", "continue");
             }

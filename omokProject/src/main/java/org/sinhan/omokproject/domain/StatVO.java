@@ -9,6 +9,6 @@ import lombok.*;
 public class StatVO {
     private String userId;
     private int win;
-    private int lost;
+    private int lose;
     private int rate;
 }

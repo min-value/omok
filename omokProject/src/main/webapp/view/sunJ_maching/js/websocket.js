@@ -40,6 +40,8 @@ export function openWebSocket(gameId) {
             handleWaitingStatus(data);
         } else if (data.status === "MATCHED") {
             cache.youCache = data.you;
+
+
             console.log(cache.youCache);
             cache.opponentCache = data.opponent;
             myRole = (cache.youCache.id.trim() === data.player1.trim()) ? 1 : 2;
@@ -55,7 +57,6 @@ export function openWebSocket(gameId) {
         } else if (data.type === 'move') {
             drawStone(data);
         } else if (data.type === "gameover") {
-
             gameOver(data);
 
         }
@@ -137,7 +138,7 @@ export function openWebSocket(gameId) {
         if (Omok.checkWin(cell.row, cell.col, currentTurn)) {
             setTimeout(() => {
                 console.log((currentTurn === 1 ? "흑" : "백") + " 승리!");
-                location.reload();
+                // location.reload();
             }, 100);
 
             const message = {
@@ -233,48 +234,124 @@ export function openWebSocket(gameId) {
             sessionStorage.removeItem('turn');
             // location.reload();
             const gameId = getGameIdFromURL();
-            showResultModal(gameId);
+            showResultModal(gameId, data.winnerId);
         // }, 100);
     }
 
-    function showResultModal(gameId) {
-        fetch(`/view/modal/result/result.jsp?gameId=` + gameId)
-            .then(response => response.text())
-            .then(html => {
-                // 임시로 div 생성해서 응답 HTML을 담음
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
+    function showResultModal(gameId, winnerId) {
+        const payload = {
+            gameId: gameId,
+            winnerId: winnerId
+        };
 
-                // #modal 요소만 추출
-                const modal = tempDiv.querySelector('#modal');
+        fetch('/isWin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("data : " + JSON.stringify(data));
+                if (data.result === "success") {
+                    // 파생 데이터 계산
+                    const resultImage = data.isWinner ? "/img/win_text.png" : "/img/lose_text.png";
+                    const userImgUrl = `/img/profile/${data.image}.png`;
+                    const total = data.win + data.lose;
+                    const winRate = total > 0 ? Math.round(data.win / total * 100) : 0;
+                    const loseRate = total > 0 ? 100 - winRate : 0;
 
-                if (modal) {
-                    // 기존에 이미 모달이 있으면 삭제
-                    const oldModal = document.querySelector('#modal');
-                    if (oldModal) oldModal.remove();
+                    const modalHtml = `
+                <div id="modal" style="position: absolute;
+                        background-color: rgba(0, 0, 0, 0.6);
+                        height: 100vh;
+                        width: 100vw;
+                        display: none;
+                        justify-content: center;
+                        align-items: center;">
+                    <div id="board" style="width: 50vw;
+                            aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
+                            background: url('/img/modal_background.png') no-repeat center center;
+                            background-size: contain;
+                            min-width: 100px;">
+                        <div id="text" style="background: url('${resultImage}') no-repeat center center; background-size: contain; height: 25%; margin-top: 9%;"></div>
+                        <div id="info" style="display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 5%;
+                                padding: 0 17%;
+                                overflow: hidden; /* ← 튀어나오는 거 방지 */">
+                            <div id="user_img" style="flex-basis: 35%; aspect-ratio: 1 / 1; background: url('${userImgUrl}') no-repeat center center; background-size: contain; min-width: 80px;"></div>
+                            <div id="explanation" style="flex: 1;
+                                font-size: clamp(12px, 2vw, 28px);
+                                word-break: keep-all;
+                                min-width: 120px;
+                                align-self: flex-start;
+                                padding: 4% 0;">
+                                <div>아이디: ${data.userId}</div>
+                                <div>${total}전 ${data.win}승 ${data.lose}패</div>
+                                <div id="bar" style="display:flex; height:23px; background-color:#ddd; border-radius:10px; overflow:hidden; margin-top:10px; border:3px solid #333;">
+                                    <div id="win_bar" style="width: ${winRate}%; height: 23px; background-color:#4a68c3; color:#fff; display:flex; align-items:center; justify-content:center; font-size:clamp(8px,1.5vw,13px);">${data.win}</div>
+                                    <div id="lose_bar" style="width: ${loseRate}%; height: 23px; background-color:#f44336; color:#fff; display:flex; align-items:center; justify-content:center; font-size:clamp(8px,1.5vw,13px);">${data.lose}</div>
+                                </div>
+                                <div id="bar_label" style="display:flex; justify-content:space-between; margin-top:4%; font-size:clamp(10px,1.5vw,15px); padding: 0 5px;">
+                                    <div id="win_label">승 (${winRate}%)</div>
+                                    <div id="lose_label">패 (${loseRate}%)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="btn" style="height: 20%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-wrap: wrap;
+                            padding: 0 2%;
+                            gap: 4%;">
+                            <button id="go_main_btn" style="height: 45%;
+                                width: 25%;
+                                background-color: #d9d9d9;
+                                border-radius: 10px;
+                                border-color: #d9d9d9;
+                                font-size: clamp(8px, 1.5vw, 25px);
+                                transition: background-color 0.2s ease, border-color 0.2s ease;">메인 메뉴</button>
+                            <button id="re_btn" style = "height: 45%;
+                                width: 25%;
+                                background-color: #d9d9d9;
+                                border-radius: 10px;
+                                border-color: #d9d9d9;
+                                font-size: clamp(8px, 1.5vw, 25px);
+                                transition: background-color 0.2s ease, border-color 0.2s ease;">다시 시작</button>
+                        </div>
+                    </div>
+                </div>
+            `;
 
-                    // 모달을 body에 추가
-                    document.body.appendChild(modal);
+                    // 모달 삽입
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = modalHtml;
+                    document.body.appendChild(tempDiv.firstElementChild);
 
-                    // 모달 보여주기
-                    modal.style.display = 'flex';
-
-                    // 다시 버튼 이벤트 등록
+                    // 버튼 이벤트 등록
+                    const modal = document.querySelector('#modal');
                     modal.querySelector('#go_main_btn').addEventListener("click", () => {
-                        modal.style.display = "none";
-                        // 메인으로 이동하려면 여기서 location.href = "main.jsp" 같은 코드 추가 가능
+                        location.href = "main"; // 메인 이동 시 주석 해제
                     });
-
                     modal.querySelector('#re_btn').addEventListener("click", () => {
                         modal.style.display = "none";
-                        // 다시 시작 기능이 있다면 이곳에서 로직 작성
+                        // 다시 시작 기능 구현
                     });
+                } else {
+                    console.error("서버 응답 실패:", data);
                 }
+                modal.style.display = "flex";
             })
             .catch(error => {
-                console.error("결과 모달 불러오기 실패", error);
+                console.error("결과 처리 실패", error);
             });
     }
+
+
     // 게임 아이디 받기
     function getGameIdFromURL() {
         const params = new URLSearchParams(window.location.search);

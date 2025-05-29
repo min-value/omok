@@ -5,7 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>OMOK</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/board/board.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/game.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/profile/profile.css" />
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/board/board.css"/>--%>
     <%--매칭 모달 스타일 추가--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/modal/match/matchmodal.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/game/chat/chatwindow/chatstyle.css"/>
@@ -58,10 +60,31 @@
         <img id="board-image" src="${pageContext.request.contextPath}/img/omok_board.png" alt="omok board" />
     </div>
     <div class="info">
-        <div class="profile">
-            profile
+        <!-- 프로필 -->
+        <div class="profile-content">
+            <div class="profile-player">
+                <div class="card-bg"></div>
+                <div class="profile-player-card">
+                    <div class="profile-image1"></div>
+                    <div class="profile-player-name">Player1</div>
+                </div>
+                <img src="${pageContext.request.contextPath}/img/black_stone.png" class="stone-image-black"  alt="흑돌"/>
+            </div>
+
+            <div class="vs-text">vs</div>
+
+            <div class="profile-player">
+                <div class="card-bg"></div>
+                <img src="${pageContext.request.contextPath}/img/white_stone.png" class="stone-image-white" alt="백돌"/>
+                <div class="profile-player-card">
+                    <div class="profile-image2"></div>
+                    <div class="profile-player-name">Player2</div>
+                </div>
+            </div>
         </div>
-        <div class="chat">
+
+        <!-- 채팅 -->
+<%--        <div class="chat">--%>
             <div class="chat-box">
                 <div class="chat-top">채팅방</div>
                 <div class="chat-mid"></div>
@@ -70,7 +93,7 @@
                     <button class="send-btn">전송</button>
                 </div>
             </div>
-        </div>
+<%--        </div>--%>
     </div>
 </div>
 

@@ -20,7 +20,7 @@
     }
 }
 
-.player {
+.profile-player {
     position: relative;
     overflow: visible;
     width: 30%;
@@ -28,7 +28,7 @@
     flex-shrink: 0;
 }
 
-.player-card {
+.profile-player-card {
     position: relative;
     z-index: 2;
     display: flex;
@@ -66,7 +66,7 @@
     background-image: url('../../../img/profile/4.png');
 }
 
-.player-name {
+.profile-player-name {
     width: 100%;
     background-color: white;
     font-size: 1rem;

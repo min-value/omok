@@ -92,8 +92,7 @@ public class WinCheckController extends HttpServlet {
             responseJson.addProperty("userId", userVO.getUserId());
             responseJson.addProperty("image", userVO.getImage());
             responseJson.addProperty("win", win);
-            responseJson.addProperty("win", lose);
-            responseJson.addProperty("lose", userVO.getLose());
+            responseJson.addProperty("lose", lose);
             responseJson.addProperty("isWinner", isWinner);
 
 

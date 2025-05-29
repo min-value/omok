@@ -246,15 +246,15 @@ export function openWebSocket(gameId) {
             ? "🎉 당신이 승리했습니다!"
             : "😢 패배하셨습니다.";
 
-        // setTimeout(() => {
-            alert(resultMessage);
-            removeChat()
-            sessionStorage.removeItem('board');
-            sessionStorage.removeItem('turn');
-            // location.reload();
-            const gameId = getGameIdFromURL();
+        removeChat();
+        sessionStorage.removeItem('board');
+        sessionStorage.removeItem('turn');
+        const gameId = getGameIdFromURL();
+
+        // 2초 후에 결과 모달 표시
+        setTimeout(() => {
             showResultModal(gameId, data.winnerId);
-        // }, 100);
+        }, 1000);
     }
 
     function showResultModal(gameId, winnerId) {

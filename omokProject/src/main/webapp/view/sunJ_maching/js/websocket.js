@@ -247,7 +247,7 @@ export function openWebSocket(gameId) {
             : "😢 패배하셨습니다.";
 
         // setTimeout(() => {
-            alert(resultMessage);
+        //     alert(resultMessage);
             removeChat()
             sessionStorage.removeItem('board');
             sessionStorage.removeItem('turn');
@@ -288,7 +288,8 @@ export function openWebSocket(gameId) {
                         width: 100vw;
                         display: none;
                         justify-content: center;
-                        align-items: center;">
+                        align-items: center;
+                        z-index: 1000;">
                     <div id="board" style="width: 50vw;
                             aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
                             background: url('/img/modal_background.png') no-repeat center center;
@@ -391,6 +392,13 @@ export function openWebSocket(gameId) {
     }
 
     function handleMatchedStatus(data) {
+        cache.opponentCache = data.opponent;
+
+        const opponent = data.opponent;
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.game-profile-image2').style.backgroundImage = `url('${contextPath}/img/profile/${opponent.image}.png')`;
+        });
+
         Modal.renderPlayer("you", data.you);
         Modal.renderPlayer("opponent", data.opponent);
 
@@ -473,7 +481,6 @@ function removeChat() {
     sessionStorage.removeItem('chatHistory');
     Chat.mid.innerHTML = "";
 }
-
 
 
 

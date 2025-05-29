@@ -1,5 +1,67 @@
 <%--우리 게임 하는 화면은 WEB-INF에 넣을 경우, 여기 링킹하는거 수정해야 한다!!!! (Controller에서 하는거로.... 그래서 시간 없으면 그냥 빼둬도 괜찮다.)--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import ="org.sinhan.omokproject.domain.UserVO"%>
+<%@ page import ="org.sinhan.omokproject.domain.GameVO" %>
+<%@ page import ="org.sinhan.omokproject.repository.sunJMatchingDAO.GameDAO"%>
+<%@ page import ="org.sinhan.omokproject.repository.sunJMatchingDAO.UserDAO"%>
+<%
+    // 로그인 유저 확인
+    UserVO loginUser = (UserVO) session.getAttribute("loginInfo");
+    String userId = loginUser != null ? loginUser.getUserId() : "unknown";
+
+    // gameId 파라미터 확인
+    String gameIdParam = request.getParameter("gameId");
+    int gameId = -1;
+
+    // player 정보 초기화
+    String player1Id = "unknown";
+    String player2Id = "unknown";
+    int player1Img = -1, player2Img = -1;
+    int player1Win = 0, player1Lose = 0;
+    int player2Win = 0, player2Lose = 0;
+    GameVO.GameStatus gameStatus = GameVO.GameStatus.EMPTY;
+
+    if (gameIdParam != null) {
+        try {
+            gameId = Integer.parseInt(gameIdParam);
+            GameVO game = GameDAO.INSTANCE.getGameById(gameId);
+
+            if (game != null) {
+                player1Id = game.getPlayer1();
+                player2Id = game.getPlayer2();
+                gameStatus = game.getStatus();
+
+                // player1 정보
+                UserVO player1 = UserDAO.INSTANCE.findUserById(player1Id);
+                if (player1 != null) {
+                    player1Img = player1.getImage();
+                    player1Win = player1.getWin();
+                    player1Lose = player1.getLose();
+                }
+
+                // player2 정보
+                UserVO player2 = UserDAO.INSTANCE.findUserById(player2Id);
+                if (player2 != null) {
+                    player2Img = player2.getImage();
+                    player2Win = player2.getWin();
+                    player2Lose = player2.getLose();
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace(); // 로그로 남기기
+        }
+    }
+
+    // 승률 계산
+    int player1Total = player1Win + player1Lose;
+    int player2Total = player2Win + player2Lose;
+    int player1Rate = player1Total > 0 ? (int)((double) player1Win / player1Total * 100) : 0;
+    int player2Rate = player2Total > 0 ? (int)((double) player2Win / player2Total * 100) : 0;
+%>
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,23 +127,26 @@
             <div class="profile-player">
                 <div class="card-bg"></div>
                 <div class="profile-player-card">
-                    <div class="profile-image1"></div>
-                    <div class="profile-player-name">Player1</div>
+                    <!-- profile-image1: 배경 이미지로 처리 -->
+                    <div class="profile-image1" style="background-image: url('<%= request.getContextPath() %>/img/profile/<%= player1Img %>.png');"></div>
+                    <div class="profile-player-name"><%= player1Id %></div>
                 </div>
-                <img src="${pageContext.request.contextPath}/img/black_stone.png" class="stone-image-black"  alt="흑돌"/>
+                <img src="<%= request.getContextPath() %>/img/black_stone.png" class="stone-image-black" alt="흑돌"/>
             </div>
 
             <div class="vs-text">vs</div>
 
             <div class="profile-player">
                 <div class="card-bg"></div>
-                <img src="${pageContext.request.contextPath}/img/white_stone.png" class="stone-image-white" alt="백돌"/>
+                <img src="<%= request.getContextPath() %>/img/white_stone.png" class="stone-image-white" alt="백돌"/>
                 <div class="profile-player-card">
-                    <div class="profile-image2"></div>
-                    <div class="profile-player-name">Player2</div>
+                    <!-- profile-image2: 배경 이미지로 처리 -->
+                    <div class="game-profile-image2" style="background-image: url('<%= request.getContextPath() %>/img/profile/<%= player2Img %>.png');"></div>
+                    <div class="profile-player-name"><%= player2Id %></div>
                 </div>
             </div>
         </div>
+
 
         <!-- 채팅 -->
 <%--        <div class="chat">--%>

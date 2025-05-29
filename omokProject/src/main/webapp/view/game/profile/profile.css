@@ -30,7 +30,7 @@
 
 .profile-player-card {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,7 +50,7 @@
 }
 
 .profile-image1,
-.profile-image2 {
+.game-profile-image2 {
     width: 100%;
     aspect-ratio: 1 / 1;
     background-size: cover;
@@ -62,7 +62,7 @@
     background-image: url('../../../img/profile/1.png');
 }
 
-.profile-image2 {
+.game-profile-image2 {
     background-image: url('../../../img/profile/4.png');
 }
 

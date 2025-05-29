@@ -24,10 +24,28 @@ export function showPlayer2Info() {
     document.getElementById('rate2').classList.remove('hidden');
 
     const opponent = cache.opponentCache;
-    if(opponent) {
+    console.log("🔍 opponentCache in showPlayer2Info:", opponent);
+
+    if (opponent.id) {
         document.getElementById('name2').textContent = opponent.id;
-        document.getElementById('rate2').textContent = `승률 ${opponent.rate} %`;
+    } else {
+        console.warn("⛔ id 데이터가 불완전합니다.");
     }
+    if (opponent.image) {
+        document.getElementById('profile2').style.backgroundImage =
+            `url('${contextPath}/img/profile/${opponent.image}.png')`;
+    } else {
+        console.log("opponent.image 값:", JSON.stringify(opponent.image));
+        console.warn("⛔ img 데이터가 불완전합니다.");
+    }
+
+    // if(opponent.id && opponent.image) {
+    //     document.getElementById('name2').textContent = opponent.id;
+    //     document.getElementById('profile2').style.backgroundImage =
+    //         `url('${contextPath}/img/profile/${opponent.image}.png')`;
+    // } else {
+    //     console.warn("⛔ opponent 데이터가 불완전합니다.");
+    // }
 }
 
 // AJAX로 초기 상태 확인

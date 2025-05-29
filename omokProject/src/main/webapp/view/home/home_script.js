@@ -154,7 +154,7 @@ function setMyRank(rank, imgUrl, userId, winRate) {
             <div class="rank_user_id">${userId}</div>
             <div class="rank_user_rate">
                 <img src="../../img/win_icon.png" class="win_icon" alt="승리아이콘">
-                <span class="win_rate">${winRate}</span>
+                <span class="win_rate">${winRate}%</span>
             </div>`;
 
     $myRank.html(myRankHtml);

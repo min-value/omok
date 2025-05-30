@@ -29,12 +29,12 @@
   </thead>
   <tbody>
     <tr>
-    <td><p align="center"><img src="https://github.com/user-attachments/assets/b79d75bb-6092-417d-8f17-0e90aebf7c10" width=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/38c84cca-015f-4789-8ec4-28646802c88a" width=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/b12c9f01-1ca9-4953-b19a-bea74913c0c2" width=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/7d85ab39-1635-41f6-84ce-460e1ea857de" width=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/699b9c1b-ce87-457a-9175-c83bf9714551" width=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/7fb44251-7af2-4917-b53d-46f0654e55ed" width=150px></p></td>
+    <td><p align="center"><img src="https://github.com/user-attachments/assets/b79d75bb-6092-417d-8f17-0e90aebf7c10" height=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/699b9c1b-ce87-457a-9175-c83bf9714551" height=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/b12c9f01-1ca9-4953-b19a-bea74913c0c2" height=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/7d85ab39-1635-41f6-84ce-460e1ea857de" height=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/38c84cca-015f-4789-8ec4-28646802c88a" height=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/7fb44251-7af2-4917-b53d-46f0654e55ed" height=150px></p></td>
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/chqkq" target="_blank">@chqkq</a></td>
@@ -78,13 +78,13 @@
       <td>
         <div>- 채팅 UI</div>
         <div>- 실시간 채팅 소켓</div>
+        <div>- 파일 구조 설계</div>
       </td>
       <td>
         <div>- 개발 환경 구축</div>
         <div>- 실시간 매칭 웹 소켓</div>
         <div>- 회원가입 서버 + UI 전체</div>
         <div>- 로그인/로그아웃 서버 + UI 전체</div>
-        <div>- 매칭 & 게임 서버 병합 및 연결</div>
       </td>
     </tr>
   </tbody>
@@ -253,4 +253,4 @@
   <img src="https://github.com/user-attachments/assets/a13e0efe-f2da-4539-9709-e16ddc3eb032">
 <br>
 <h2>ERD</h2>
-<img src="https://github.com/user-attachments/assets/f440487f-184f-4e18-9519-90b868cc7eea">
+<img src="https://github.com/user-attachments/assets/382234f9-022c-47f7-b6be-88072c4a881a">

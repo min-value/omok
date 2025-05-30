@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/67c453b9-eb09-4f49-99ef-013f542aadf4" width=600px>
+  <img src="https://github.com/user-attachments/assets/b03596e1-5b93-4c3d-95fb-4f5f86cac00f" width=600px>
 </div>
 
 <h1>⚫ 웹 소켓 실시간 오목 프로젝트 - MIN-VALUE ⚪</h1>
@@ -160,28 +160,92 @@
   <tbody>
     <tr>
       <td>
-        <img src="https://github.com/user-attachments/assets/1394349f-5c43-47ac-a853-708578250bd9" width=400px>
+        <img src="https://github.com/user-attachments/assets/e386df99-a612-472a-8615-2e79db51d41b" width=400px>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/a08a66cf-510a-4abd-8b94-7a915de08bd3" width=400px>
+        <img src="https://github.com/user-attachments/assets/70de20c1-bc75-4154-80b8-f72d640b9a9a" width=400px>
       </td>
     </tr>
   </tbody>
-  <table>
+</table>
+<table>
   <thead>
     <tr>
-      <td align="center">화원가입 페이지</td>
+      <td align="center">회원가입 페이지</td>
       <td align="center">회원가입 중복체크</td>
     </tr>
   </thead>
   <tbody>
       <td>
-        <img src="https://github.com/user-attachments/assets/af19da07-c10d-48f3-93f4-ad63a33d4a21" width=400px>
+        <img src="https://github.com/user-attachments/assets/a195f43c-9e8d-4573-ba93-af0d8cb26ada" width=400px>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/3f884a9b-e0a9-46b3-9b5d-2f2fe5d581c0" width=400px>
+        <img src="https://github.com/user-attachments/assets/5c26fa25-e0d3-431a-b61b-79139e1e6182" width=400px>
       </td>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <td align="center">메인 페이지</td>
+      <td align="center">로그아웃 시도 페이지</td>
     </tr>
+  </thead>
+  <tbody>
+      <td>
+        <img src="https://github.com/user-attachments/assets/e4607cb9-6625-4309-ba42-470ea10d8b03" width=400px>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/a39f4169-88c1-4f9f-b9c2-790519653b0e" width=400px>
+      </td>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <td align="center">매칭 모달 매칭 전</td>
+      <td align="center">매칭 모달 매칭 완료</td>
+    </tr>
+  </thead>
+  <tbody>
+      <td>
+        <img src="https://github.com/user-attachments/assets/a9bf75c3-bc9a-4490-a56b-4e1ec57c5b83" width=400px>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/00d46a73-78e5-46f0-a624-c74d9eeabf6e" width=400px>
+      </td>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <td align="center">게임 화면</td>
+      <td align="center">게임 진행, 채팅 화면</td>
+    </tr>
+  </thead>
+  <tbody>
+      <td>
+        <img src="https://github.com/user-attachments/assets/1bd7724a-7cf3-4ce9-89d4-ceed07763eca" width=400px>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/7c10873d-d627-4c4f-9663-3cf6a0e09aa9" width=400px>
+      </td>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <td align="center">Winner 모달</td>
+      <td align="center">Loser 모달</td>
+    </tr>
+  </thead>
+  <tbody>
+      <td>
+        <img src="https://github.com/user-attachments/assets/59dc111c-ac52-4c66-9bb7-edbf709c7e09" width=400px>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/3e76f4f4-6833-4e8b-aabf-73ae6b8bfa48" width=400px>
+      </td>
   </tbody>
 </table>
 <br>

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/4a92f64c-b061-46ca-a8d4-7676111729a2" width=600px>
+  <img src="https://github.com/user-attachments/assets/67c453b9-eb09-4f49-99ef-013f542aadf4" width=600px>
 </div>
 
 <h1>⚫ 웹 소켓 실시간 오목 프로젝트 - MIN-VALUE ⚪</h1>
@@ -29,19 +29,19 @@
   </thead>
   <tbody>
     <tr>
-    <td><p align="center">각자 사진~~</p></td>
-     <td><p align="center">각자 사진~~</p></td>
-     <td><p align="center">각자 사진~~</p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/953e1928-cdbf-4299-908f-31bff581756a" width=150px></p></td>
-     <td><p align="center">각자 사진~~</p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/c50bca8e-c6c9-488a-8b02-062663716f99" width=150px></p></td>
+    <td><p align="center"><img src="https://github.com/user-attachments/assets/b79d75bb-6092-417d-8f17-0e90aebf7c10" width=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/38c84cca-015f-4789-8ec4-28646802c88a" width=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/b12c9f01-1ca9-4953-b19a-bea74913c0c2" width=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/7d85ab39-1635-41f6-84ce-460e1ea857de" width=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/699b9c1b-ce87-457a-9175-c83bf9714551" width=150px></p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/7fb44251-7af2-4917-b53d-46f0654e55ed" width=150px></p></td>
     </tr>
     <tr>
-      <td align="center">각자 깃 아이디~</td>
-      <td align="center">각자 깃 아이디~</td>
-      <td align="center">각자 깃 아이디~</td>
+      <td align="center"><a href="https://github.com/chqkq" target="_blank">@chqkq</a></td>
+      <td align="center"><a href="https://github.com/subin930" target="_blank">@subin930</a></td>
+      <td align="center"><a href="https://github.com/hwang-hyesung" target="_blank">@hwang-hyesung</a></td>
       <td align="center"><a href="https://github.com/noowad-s" target="_blank">@noowad-s</a></td>
-      <td align="center">각자 깃 아이디~</td>
+      <td align="center"><a href="https://github.com/Sechamm" target="_blank">@Sechamm</a></td>
       <td align="center"><a href="https://github.com/sunJ0120" target="_blank">@sunJ0120</a></td>
     </tr>
     <tr>
@@ -59,10 +59,16 @@
         <div>- 실시간 매칭 웹소켓</div>
       </td>
       <td>
-        <div>- 메인화면 담당</div>
+        <div>- 프로필 조회/수정 기능</div>
+        <div>- 랭킹 조회 기능</div>
+        <div>- 메인 화면 UI</div>
+        <div>- FIGMA/PPT 제작</div>
       </td>
       <td>
-        <div>- 실시간 오목 구현</div>
+        <div>- 오목 UI</div>
+        <div>- 실시간 오목 게임 소켓</div>
+        <div>- 오목 게임 룰 구현 </div>
+        <div>- FIGMA/PPT 제작</div>
       </td>
       <td>
         <div>- 매칭모달 구현</div>
@@ -70,14 +76,15 @@
         <div>- 게임 화면 병합</div>
       </td>
       <td>
-        <div>- 타이머 구현</div>
-        <div>- 실시간 채팅 구현</div>
+        <div>- 채팅 UI</div>
+        <div>- 실시간 채팅 소켓</div>
       </td>
       <td>
-        <div>- 실시간 매칭 웹소켓</div>
-        <div>- 세션 로그인 & 로그아웃</div>
-        <div>- 회원가입</div>
-        <div>- 설정 전반</div>
+        <div>- 개발 환경 구축</div>
+        <div>- 실시간 매칭 웹 소켓</div>
+        <div>- 회원가입 서버 + UI 전체</div>
+        <div>- 로그인/로그아웃 서버 + UI 전체</div>
+        <div>- 매칭 & 게임 서버 병합 및 연결</div>
       </td>
     </tr>
   </tbody>
@@ -153,10 +160,10 @@
   <tbody>
     <tr>
       <td>
-        <img src="https://github.com/user-attachments/assets/fab951fb-0a48-4e42-9946-e04eb331b69c" width=400px>
+        <img src="https://github.com/user-attachments/assets/1394349f-5c43-47ac-a853-708578250bd9" width=400px>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/a9fc1f69-03c8-47a6-8822-7058b2f218ae" width=400px>
+        <img src="https://github.com/user-attachments/assets/a08a66cf-510a-4abd-8b94-7a915de08bd3" width=400px>
       </td>
     </tr>
   </tbody>
@@ -169,20 +176,20 @@
   </thead>
   <tbody>
       <td>
-        <img src="https://github.com/user-attachments/assets/6dad6773-1096-43ff-b9df-ad12f8403e40" width=400px>
+        <img src="https://github.com/user-attachments/assets/af19da07-c10d-48f3-93f4-ad63a33d4a21" width=400px>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/919a845e-6eae-48a1-abca-58ffe2b912f3" width=400px>
+        <img src="https://github.com/user-attachments/assets/3f884a9b-e0a9-46b3-9b5d-2f2fe5d581c0" width=400px>
       </td>
     </tr>
   </tbody>
 </table>
 <br>
 <h2>파일 구조</h2>
-  <img src="https://github.com/user-attachments/assets/9a6d79d2-b947-4eec-96ff-db9dc6eb7d74">
+  <img src="https://github.com/user-attachments/assets/c61151b1-2f10-4331-b29c-48e3b752d1f9">
 <br>
 <h2>ERD</h2>
-<img src="https://github.com/user-attachments/assets/ff7f08aa-6001-4843-8be2-8358994905ee">
+<img src="https://github.com/user-attachments/assets/f440487f-184f-4e18-9519-90b868cc7eea">
 <br>
 <h2>사용법 (빌드 방법)</h2>
 <br>

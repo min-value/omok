@@ -406,8 +406,7 @@ export function openWebSocket(gameId) {
         console.log("내정보:", data.you);
         console.log("상대방과 매칭되었습니다:", data.opponent);
 
-        showPlayer2Info();  // UI 업데이트 함수 호출
-
+        showPlayer2Info(data.opponent, data.player1, data.you);  // UI 업데이트 함수 호출
         /*
         ✅ WebSocket 연결됨
             game.jsp?gameId=63:124 내정보: {id: 'sunJ', rate: 0, img: 6}id: "sunJ"img: 6rate: 0[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()

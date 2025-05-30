@@ -179,6 +179,7 @@
 </table>
 <br>
 <h2>파일 구조</h2>
+  <img src="https://github.com/user-attachments/assets/9a6d79d2-b947-4eec-96ff-db9dc6eb7d74">
 <br>
 <h2>ERD</h2>
 <img src="https://github.com/user-attachments/assets/ff7f08aa-6001-4843-8be2-8358994905ee">

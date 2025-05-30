@@ -20,18 +20,17 @@
     }
 }
 
-.profile-player {
-    flex: 1 1 45%;
+.player {
     position: relative;
     overflow: visible;
-    /*width: 30%;*/
-    width: calc(50% - 10px);
+    width: 30%;
     min-width: 120px;
+    flex-shrink: 0;
 }
 
-.profile-player-card {
+.player-card {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,7 +50,7 @@
 }
 
 .profile-image1,
-.game-profile-image2 {
+.profile-image2 {
     width: 100%;
     aspect-ratio: 1 / 1;
     background-size: cover;
@@ -63,11 +62,11 @@
     background-image: url('../../../img/profile/1.png');
 }
 
-.game-profile-image2 {
+.profile-image2 {
     background-image: url('../../../img/profile/4.png');
 }
 
-.profile-player-name {
+.player-name {
     width: 100%;
     background-color: white;
     font-size: 1rem;

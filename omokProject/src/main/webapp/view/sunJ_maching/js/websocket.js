@@ -246,15 +246,15 @@ export function openWebSocket(gameId) {
             ? "🎉 당신이 승리했습니다!"
             : "😢 패배하셨습니다.";
 
-        // setTimeout(() => {
-            alert(resultMessage);
-            removeChat()
-            sessionStorage.removeItem('board');
-            sessionStorage.removeItem('turn');
-            // location.reload();
-            const gameId = getGameIdFromURL();
+        removeChat();
+        sessionStorage.removeItem('board');
+        sessionStorage.removeItem('turn');
+        const gameId = getGameIdFromURL();
+
+        // 2초 후에 결과 모달 표시
+        setTimeout(() => {
             showResultModal(gameId, data.winnerId);
-        // }, 100);
+        }, 1000);
     }
 
     function showResultModal(gameId, winnerId) {
@@ -288,13 +288,14 @@ export function openWebSocket(gameId) {
                         width: 100vw;
                         display: none;
                         justify-content: center;
-                        align-items: center;">
+                        align-items: center;
+                        z-index: 1000;">
                     <div id="board" style="width: 50vw;
                             aspect-ratio: 4 / 3; /* ← 예시: 4:3 비율 */
                             background: url('/img/modal_background.png') no-repeat center center;
                             background-size: contain;
                             min-width: 100px;">
-                        <div id="text" style="background: url('${resultImage}') no-repeat center center; background-size: contain; height: 25%; margin-top: 9%;"></div>
+                        <div id="text" style="background: url('${resultImage}') no-repeat center center; background-size: contain; height: 25%; margin-top: 9%; margin-bottom: 4%"></div>
                         <div id="info" style="display: flex;
                                 align-items: center;
                                 justify-content: center;
@@ -334,13 +335,13 @@ export function openWebSocket(gameId) {
                                 border-color: #d9d9d9;
                                 font-size: clamp(8px, 1.5vw, 25px);
                                 transition: background-color 0.2s ease, border-color 0.2s ease;">메인 메뉴</button>
-                            <button id="re_btn" style = "height: 45%;
-                                width: 25%;
-                                background-color: #d9d9d9;
-                                border-radius: 10px;
-                                border-color: #d9d9d9;
-                                font-size: clamp(8px, 1.5vw, 25px);
-                                transition: background-color 0.2s ease, border-color 0.2s ease;">다시 시작</button>
+<!--                            <button id="re_btn" style = "height: 45%;-->
+<!--                                width: 25%;-->
+<!--                                background-color: #d9d9d9;-->
+<!--                                border-radius: 10px;-->
+<!--                                border-color: #d9d9d9;-->
+<!--                                font-size: clamp(8px, 1.5vw, 25px);-->
+<!--                                transition: background-color 0.2s ease, border-color 0.2s ease;">다시 시작</button>-->
                         </div>
                     </div>
                 </div>
@@ -356,10 +357,10 @@ export function openWebSocket(gameId) {
                     modal.querySelector('#go_main_btn').addEventListener("click", () => {
                         location.href = "main"; // 메인 이동 시 주석 해제
                     });
-                    modal.querySelector('#re_btn').addEventListener("click", () => {
-                        modal.style.display = "none";
-                        // 다시 시작 기능 구현
-                    });
+                    // modal.querySelector('#re_btn').addEventListener("click", () => {
+                    //     modal.style.display = "none";
+                    //     // 다시 시작 기능 구현
+                    // });
                 } else {
                     console.error("서버 응답 실패:", data);
                 }
@@ -391,6 +392,13 @@ export function openWebSocket(gameId) {
     }
 
     function handleMatchedStatus(data) {
+        cache.opponentCache = data.opponent;
+
+        const opponent = data.opponent;
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.game-profile-image2').style.backgroundImage = `url('${contextPath}/img/profile/${opponent.image}.png')`;
+        });
+
         Modal.renderPlayer("you", data.you);
         Modal.renderPlayer("opponent", data.opponent);
 
@@ -473,7 +481,6 @@ function removeChat() {
     sessionStorage.removeItem('chatHistory');
     Chat.mid.innerHTML = "";
 }
-
 
 
 

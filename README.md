@@ -250,11 +250,7 @@
 </table>
 <br>
 <h2>파일 구조</h2>
-  <img src="https://github.com/user-attachments/assets/c61151b1-2f10-4331-b29c-48e3b752d1f9">
+  <img src="https://github.com/user-attachments/assets/a13e0efe-f2da-4539-9709-e16ddc3eb032">
 <br>
 <h2>ERD</h2>
 <img src="https://github.com/user-attachments/assets/f440487f-184f-4e18-9519-90b868cc7eea">
-<br>
-<h2>사용법 (빌드 방법)</h2>
-<br>
-<h2>자료</h2>

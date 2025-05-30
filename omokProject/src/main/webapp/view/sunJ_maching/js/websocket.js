@@ -276,7 +276,7 @@ export function openWebSocket(gameId) {
                 if (data.result === "success") {
                     // 파생 데이터 계산
                     const resultImage = data.isWinner ? "/img/win_text.png" : "/img/lose_text.png";
-                    const userImgUrl = `/img/profile/${data.image}.png`;
+                    const userImgUrl = data.isWinner ? `/img/profile/${data.image}.png` : `/img/profile/${data.image}_sad.png`;
                     const total = data.win + data.lose;
                     const winRate = total > 0 ? Math.round(data.win / total * 100) : 0;
                     const loseRate = total > 0 ? 100 - winRate : 0;

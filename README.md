@@ -244,7 +244,7 @@
         <img src="https://github.com/user-attachments/assets/59dc111c-ac52-4c66-9bb7-edbf709c7e09" width=400px>
       </td>
       <td>
-        <img src="https://github.com/user-attachments/assets/3e76f4f4-6833-4e8b-aabf-73ae6b8bfa48" width=400px>
+        <img src="https://github.com/user-attachments/assets/688b5650-f3b8-4bce-a2f5-bab88bcf50ca" width=400px>
       </td>
   </tbody>
 </table>

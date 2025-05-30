@@ -32,7 +32,7 @@
     <td><p align="center">각자 사진~~</p></td>
      <td><p align="center">각자 사진~~</p></td>
      <td><p align="center">각자 사진~~</p></td>
-     <td><p align="center">각자 사진~~</p></td>
+     <td><p align="center"><img src="https://github.com/user-attachments/assets/953e1928-cdbf-4299-908f-31bff581756a" width=150px></p></td>
      <td><p align="center">각자 사진~~</p></td>
      <td><p align="center"><img src="https://github.com/user-attachments/assets/c50bca8e-c6c9-488a-8b02-062663716f99" width=150px></p></td>
     </tr>
@@ -40,7 +40,7 @@
       <td align="center">각자 깃 아이디~</td>
       <td align="center">각자 깃 아이디~</td>
       <td align="center">각자 깃 아이디~</td>
-      <td align="center">각자 깃 아이디~</td>
+      <td align="center"><a href="https://github.com/noowad-s" target="_blank">@noowad-s</a></td>
       <td align="center">각자 깃 아이디~</td>
       <td align="center"><a href="https://github.com/sunJ0120" target="_blank">@sunJ0120</a></td>
     </tr>
@@ -67,6 +67,7 @@
       <td>
         <div>- 매칭모달 구현</div>
         <div>- 로딩창 구현</div>
+        <div>- 게임 화면 병합</div>
       </td>
       <td>
         <div>- 타이머 구현</div>

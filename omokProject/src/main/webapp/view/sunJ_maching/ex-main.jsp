@@ -11,6 +11,6 @@
 <button id="start_btn">게임 시작</button>
 
 <%--나중에 main 화면의 start 버튼에 이거 붙이면 된다.--%>
-<script src = "js/main/click-start-button.js"></script>
+<script src = "../home/click-start-button.js"></script>
 </body>
 </html>

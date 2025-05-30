@@ -1,4 +1,4 @@
-package org.sinhan.omokproject.socket.sunJsocket;
+package org.sinhan.omokproject.socket;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,7 +12,6 @@ import org.sinhan.omokproject.util.JsonBuilderUtil;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

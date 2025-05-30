@@ -250,7 +250,8 @@ export function openWebSocket(gameId) {
         sessionStorage.removeItem('board');
         sessionStorage.removeItem('turn');
         const gameId = getGameIdFromURL();
-
+        const resultSound = new Audio((data.winnerId === cache.youCache.id)?"../../../music/Power up.wav":"../../../music/Power down.wav");
+        resultSound.play();
         // 2초 후에 결과 모달 표시
         setTimeout(() => {
             showResultModal(gameId, data.winnerId);
